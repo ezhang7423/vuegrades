@@ -1,13 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar
-      align
-      fixed
-      app
-      flat
-      :collapse="!collapseOnScroll"
-      :collapse-on-scroll="collapseOnScroll"
-    >
+    <v-app-bar align app flat :collapse="!collapseOnScroll" :collapse-on-scroll="collapseOnScroll">
       <v-toolbar-title v-text="title" />
 
       <!-- <v-switch v-model="$vuetify.theme.dark" primary label="Dark Mode"></v-switch> put in a settings modal-->
@@ -36,7 +29,7 @@
       </v-container>
     </v-content>
 
-    <v-footer :fixed="fixed" app>
+    <v-footer app>
       <v-btn icon href="https://github.com/ezhang7423/vuegrades" target="_blank">
         <v-icon>fab fa-github</v-icon>
       </v-btn>
