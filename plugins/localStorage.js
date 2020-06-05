@@ -1,5 +1,5 @@
 import createPersistedState from "vuex-persistedstate";
 
 export default ({ store }) => {
-  createPersistedState({})(store);
+  createPersistedState({ key: "gradecalc" })(store);
 };
