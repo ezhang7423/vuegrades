@@ -25,7 +25,7 @@
         <!-- make into full fledged modal later -->
       </v-btn>
       <v-spacer />
-      <v-toolbar-title v-text="'Welcome back!'" />
+      <v-toolbar-title v-text="'Welcome back ' + this.$store.state.name.name " />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>fa-cog</v-icon>
       </v-btn>
@@ -49,24 +49,7 @@
 export default {
   data() {
     return {
-      drawer: false,
-      fixed: false,
       collapseOnScroll: true,
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Welcome",
-          to: "/"
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Inspire",
-          to: "/inspire"
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
       title: "GradeGrade"
     };
   }
