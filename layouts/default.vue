@@ -9,21 +9,25 @@
       :collapse-on-scroll="collapseOnScroll"
     >
       <v-toolbar-title v-text="title" />
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+
       <!-- <v-switch v-model="$vuetify.theme.dark" primary label="Dark Mode"></v-switch> put in a settings modal-->
       <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+        <v-icon>fa-plus-square</v-icon>
       </v-btn>
       <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
+        <v-icon>fa-download</v-icon>
       </v-btn>
       <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
+        <v-icon>fa-file-import</v-icon>
+      </v-btn>
+      <v-btn icon @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark">
+        <v-icon>fa-moon</v-icon>
+        <!-- make into full fledged modal later -->
       </v-btn>
       <v-spacer />
       <v-toolbar-title v-text="'Welcome back!'" />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
+        <v-icon>fa-cog</v-icon>
       </v-btn>
     </v-app-bar>
     <v-content>
@@ -33,6 +37,9 @@
     </v-content>
 
     <v-footer :fixed="fixed" app>
+      <v-btn icon href="https://github.com/ezhang7423/vuegrades" target="_blank">
+        <v-icon>fab fa-github</v-icon>
+      </v-btn>
       <span>{{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
