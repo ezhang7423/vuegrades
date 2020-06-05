@@ -1,7 +1,7 @@
 {
   "name": "gradegrade",
   "version": "1.0.0",
-  "description": "calc ur grades bruh ",
+  "description": "calc ur grades bruh",
   "author": "eddie",
   "private": true,
   "scripts": {
@@ -16,9 +16,6 @@
     "@nuxtjs/dotenv": "^1.4.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^1.19.1"
+    "@nuxtjs/vuetify": "^1.0.0"
   }
 }
