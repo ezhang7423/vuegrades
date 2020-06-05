@@ -1,18 +1,23 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-col>hi</v-col>
-    <!-- <v-switch v-model="$vuetify.theme.dark" primary label="Dark Mode"></v-switch> -->
+    <v-col>
+      <NameInput v-if="this.$store.state.name.name === ''" />
+    </v-col>
   </v-layout>
 </template>
 
 <script>
-import Logo from "~/components/Logo.vue";
-import VuetifyLogo from "~/components/VuetifyLogo.vue";
+import NameInput from "~/components/nameinput.vue";
 
 export default {
+  data() {
+    return {
+      name: ""
+    };
+  },
+  methods: {},
   components: {
-    Logo,
-    VuetifyLogo
+    NameInput
   }
 };
 </script>
