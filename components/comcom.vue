@@ -12,21 +12,14 @@
 <script>
 export default {
   props: {
-    comp: Object
-  },
-  data: () => {
-    return {
-      emAmt: {
-        1: 2.7,
-        2: 2.1,
-        3: 2.4,
-        4: 1.8,
-        5: 1.3
-      }
-    };
+    comp: Object,
+    emAmt: Object
   },
   computed: {
     boi: function() {
+      console.log(this.emAmt);
+      console.log(String(this.comp.gradie).length);
+      console.log(this.emAmt[String(this.comp.gradie).length]);
       return this.comp.gradie === 100
         ? "1.5"
         : this.emAmt[String(this.comp.gradie).length];

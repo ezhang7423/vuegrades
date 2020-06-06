@@ -20,7 +20,7 @@
             </v-hover>
           </template>
           <v-card>
-            <comcom v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
+            <comcom :emAmt="emAmt" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
           </v-card>
         </v-menu>
       </template>

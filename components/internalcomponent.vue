@@ -21,7 +21,7 @@
       <div>{{comp.weight}}%</div>
     </v-row>
     <div v-if="comp.isList">
-      <comcom class="smallboi" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
+      <comcom :emAmt="emAmt" class="smallboi" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
     </div>
     <v-spacer></v-spacer>
     <v-row class="px-3 around">
@@ -48,11 +48,11 @@ export default {
   data: () => {
     return {
       emAmt: {
-        1: 2.3,
-        2: 1.7,
-        3: 2,
-        4: 1.4,
-        5: 0.9
+        1: 6,
+        2: 5.4,
+        3: 5.7,
+        4: 5.1,
+        5: 4.6
       }
     };
   },
