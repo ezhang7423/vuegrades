@@ -1,36 +1,19 @@
 <template>
   <v-card min-height="52vh" :outlined="$vuetify.theme.dark" tile elevation="24" class="mr-8 pa-2">
-    <v-btn class="typeicon" icon>
-      <v-icon v-if="!comp.isList">fa-check-square</v-icon>
-      <template v-else>
-        <v-menu
-          max-width="10%"
-          :close-on-content-click="false"
-          offset-y
-          transition="slide-x-transition"
-          bottom
-        >
-          <template v-slot:activator="{ on }">
-            <v-hover v-slot:default="{ hover }">
-              <v-card flat :elevation="hover ? 2 : 0">
-                <div style="padding: 5px;" class="text-center" v-on="on">
-                  <v-icon>fa-list</v-icon>
-                </div>
-              </v-card>
-            </v-hover>
-          </template>
-          <v-card>
-            <comcom v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
-          </v-card>
-        </v-menu>
-      </template>
+    <v-btn icon>
+      <v-icon class="typeicon" v-if="!comp.isList">fa-check-square</v-icon>
+      <v-icon v-else class="typeicon">fa-list</v-icon>
     </v-btn>
     <v-btn @click.stop="$emit('kill')" icon class="deleteicon">
       <v-icon class="bigg">fa-times</v-icon>
     </v-btn>
 
     <v-text-field class="pepwrapper" hide-details solo flat dense :label="comp.name" />
+
     <v-col class="pad4" justify="start" no-gutters align="center">
+      <v-card v-if="comp.isList">
+        <comcom v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
+      </v-card>
       <v-spacer></v-spacer>
       <v-tooltip right>
         <template v-slot:activator="{ on }">
@@ -85,6 +68,9 @@ export default {
 </script>
 
 <style scoped>
+.typeicon {
+  font-size: 18px !important;
+}
 .deleteicon {
   float: right;
 }

@@ -77,7 +77,7 @@ export default {
 
 <style scoped>
 .centerme {
-  /* justify-content: center; */
+  flex-wrap: nowrap;
 }
 .bigg {
   font-size: 30px !important;
