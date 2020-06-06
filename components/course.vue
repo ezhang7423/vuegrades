@@ -73,7 +73,7 @@ export default {
     }
   },
   mounted: function() {
-    if (this.dat.name == "Peaceful Organic Chemistry") {
+    if (this.dat.name == "PSTAT120A") {
       this.advanced = true;
     }
   },
