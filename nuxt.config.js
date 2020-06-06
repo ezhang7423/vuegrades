@@ -26,7 +26,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: ["~/assets/main.css"],
+  css: ["~/assets/main.css", "~/assets/fonts/AbeeZee.css"],
   /*
    ** Plugins to load before mounting the App
    */

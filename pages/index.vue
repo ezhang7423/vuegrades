@@ -3,11 +3,11 @@
     <v-col>
       <NameInput v-show="name === ''" />
     </v-col>
-    <v-row>
-      <no-ssr>
-        <CourseV :dat="internalState[0]" />
-      </no-ssr>
-    </v-row>
+    <client-only>
+      <v-row>
+        <CourseV v-for="course in internalState" :key="course.name" :dat="course" />
+      </v-row>
+    </client-only>
   </v-layout>
 </template>
 

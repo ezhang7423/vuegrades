@@ -1,3 +1,7 @@
 html {
   overflow: hidden !important; /* Hide scrollbars */
 }
+
+.v-application {
+  font-family: AbeeZee !important;
+}

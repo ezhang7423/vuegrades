@@ -9,7 +9,7 @@
 
     <v-tooltip bottom>
       <template v-slot:activator="{ on }">
-        <span v-on="on">{{calcGrad(comp.grade, comp.weight) }}/{{comp.weight}}</span>
+        <span v-on="on">{{calcGrad(comp.grade, comp.weight) }}/{{comp.weight}}%</span>
       </template>
       <span>{{comp.grade}}%</span>
     </v-tooltip>
