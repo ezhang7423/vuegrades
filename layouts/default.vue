@@ -19,7 +19,7 @@
         <!-- make into full fledged modal later -->
       </v-btn>
       <v-spacer />
-      <v-toolbar-title v-text="'Welcome back ' + this.$store.state.name.name " />
+      <v-toolbar-title v-text="'Welcome back ' + $store.state.name.name " />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>fa-cog</v-icon>
       </v-btn>
