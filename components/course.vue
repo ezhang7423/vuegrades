@@ -51,7 +51,7 @@ export default {
   },
   data: () => {
     return {
-      advanced: true,
+      advanced: false,
       dialog: false
     };
   },
@@ -73,7 +73,9 @@ export default {
     }
   },
   mounted: function() {
-    console.log();
+    if (this.dat.name == "Peaceful Organic Chemistry") {
+      this.advanced = true;
+    }
   },
   methods: {
     deleteMe() {

@@ -1,7 +1,7 @@
 <template>
-  <v-card>
+  <v-card width="100%" height="100%">
     <v-btn @click.stop="$emit('done')" icon class="deleteicon">
-      <v-icon class="small">fa-times</v-icon>
+      <v-icon class="bigg">fa-times</v-icon>
     </v-btn>
     <v-card-title>
       <input
@@ -12,6 +12,10 @@
         :placeholder="dat.name"
       />
     </v-card-title>
+    <v-card-subtitle class="mx-1 px-12 display-2">94% (A)</v-card-subtitle>
+    <v-card-actions class="alignbottom">
+      <v-btn class="mbigg" text>Save</v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -45,8 +49,21 @@ export default {
 </script>
 
 <style scoped>
+.bigg {
+  font-size: 40px !important;
+}
+
+.mbigg {
+  font-size: 1.7em !important;
+}
+.alignbottom {
+  position: absolute;
+  bottom: 0.2vw;
+  left: 94vw;
+}
+
 .deleteicon {
   float: right;
-  margin: 0.5vw 0.5vw 0 0;
+  margin: 1vw 1vw 0 0;
 }
 </style>
