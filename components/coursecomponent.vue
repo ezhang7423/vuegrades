@@ -3,7 +3,13 @@
     <v-btn icon>
       <v-icon v-if="!comp.isList">fa-check-square</v-icon>
       <template v-else>
-        <v-menu :close-on-content-click="false" offset-y transition="slide-x-transition" bottom>
+        <v-menu
+          max-width="10%"
+          :close-on-content-click="false"
+          offset-y
+          transition="slide-x-transition"
+          bottom
+        >
           <template v-slot:activator="{ on }">
             <v-hover v-slot:default="{ hover }">
               <v-card flat :elevation="hover ? 2 : 0">
@@ -13,7 +19,7 @@
               </v-card>
             </v-hover>
           </template>
-          <v-card color="accent">
+          <v-card>
             <comcom v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
           </v-card>
         </v-menu>
@@ -74,9 +80,6 @@ export default {
 </script>
 
 <style scoped>
-.boi {
-  width: a;
-}
 .pewrapper {
   width: 39%;
 }

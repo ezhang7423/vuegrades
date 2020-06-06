@@ -1,28 +1,9 @@
 <template>
   <v-row justify="start" no-gutters align="center">
-    <v-text-field
-      color="accent"
-      class="nobord pepwrapper"
-      hide-details
-      solo
-      flat
-      dense
-      :label="comp.name"
-    />
-    <v-text-field
-      color="accent"
-      class="nobord pewrapper"
-      hide-details
-      solo
-      flat
-      shaped
-      dense
-      :suffix="`/100%`"
-    >
+    <v-text-field class="nobord pepwrapper" hide-details solo flat dense :label="comp.name" />
+    <v-text-field class="nobord pewrapper" hide-details solo flat shaped dense :suffix="`/100%`">
       <template v-slot:label>
-        <span
-          :style="`padding-left: ${comp.gradie === '100' ? '.4' : emAmt[comp.gradie.length]}em`"
-        >{{comp.gradie}}</span>
+        <span :style="`padding-left: ${boi}em`">{{comp.gradie}}</span>
       </template>
     </v-text-field>
   </v-row>
@@ -36,16 +17,23 @@ export default {
   data: () => {
     return {
       emAmt: {
-        1: 2.3,
-        2: 1.7,
-        3: 2,
-        4: 1.4,
-        5: 0.9
+        1: 2.2,
+        2: 1.6,
+        3: 1.9,
+        4: 1.3,
+        5: 0.8
       }
     };
   },
   mounted: function() {
     // console.log(comp);
+  },
+  computed: {
+    boi: function() {
+      return this.comp.gradie === 100
+        ? "1"
+        : this.emAmt[String(this.comp.gradie).length];
+    }
   }
 };
 </script>
@@ -58,10 +46,10 @@ export default {
   width: a;
 }
 .pewrapper {
-  /* max-width: 39%; */
+  max-width: 67%;
 }
 .pepwrapper {
-  max-width: 20%;
+  max-width: 33%;
 }
 
 .goright {
