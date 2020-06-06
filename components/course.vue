@@ -1,18 +1,13 @@
 <template >
-  <v-card class="mx-4 golden" elevation="24">
+  <v-card class="ma-4 golden" elevation="24">
     <v-btn @click.stop="dialog = true" icon class="deleteicon">
-      <v-icon class="small">fa-times</v-icon>
+      <v-icon>fa-times</v-icon>
     </v-btn>
-    <input
-      type="text"
-      class="px-6 display-1"
-      v-bind:class="{dark: $vuetify.theme.dark}"
-      :placeholder="dat.name"
-    />
+    <input type="text" class="px-6" v-bind:class="[size, dark]" :placeholder="dat.name" />
     <!-- <v-card-title class="px-6 display-1">{{dat.name}}</v-card-title> -->
     <v-col>
       <cc :comp="w" v-for="w in dat.weights" :key="w.name" />
-      <v-btn class="my-2 mx-3">Advanced</v-btn>
+      <v-btn @click.stop="advanced = true" class="my-2 mx-3">Advanced</v-btn>
       <v-divider></v-divider>
       <v-row class="pad4">
         <div class="my-2 headline">Total:</div>
@@ -23,8 +18,8 @@
     </v-col>
     <v-spacer style="height: 20vh;"></v-spacer>
     <v-dialog v-model="dialog" hide-overlay max-width="12vw">
-      <v-card>
-        <v-card-title class="headline">
+      <v-card style="min-height: 22vh">
+        <v-card-title class="headline breaknormal">
           Are you sure you want to delete
           <br />
           {{dat.name}}?
@@ -39,22 +34,47 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="advanced" fullscreen>
+      <advancedview @done="advanced = false" :dat="dat" />
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import * as helpers from "~/backend/helpers";
 import cc from "~/components/coursecomponent.vue";
+import advancedview from "~/components/fatinternals.vue";
 export default {
   props: {
     dat: Object
   },
   data: () => {
     return {
+      advanced: true,
       dialog: false
     };
   },
-  mounted: function() {},
+  computed: {
+    dark: function() {
+      return this.$vuetify.theme.dark ? "dark" : "";
+    },
+    size: function() {
+      let length = this.dat.name.length;
+      if (length >= 22) {
+        return "lh headlinee";
+      }
+      if (length >= 14) {
+        return "lh headline";
+      } else {
+        return "lh display-1";
+      }
+      // return "headlinee";
+    }
+  },
+  mounted: function() {
+    console.log();
+  },
   methods: {
     deleteMe() {
       this.$store.commit("classes/deleteClass", this.dat.name);
@@ -72,12 +92,26 @@ export default {
     }
   },
   components: {
-    cc
+    cc,
+    advancedview
   }
 };
 </script>
 
 <style scoped>
+.breaknormal {
+  word-break: normal;
+}
+.lh {
+  line-height: 2rem;
+}
+.headlinee {
+  font-size: 1.1rem;
+  width: 100%;
+  font-weight: 400;
+  line-height: 2rem;
+  letter-spacing: normal;
+}
 ::placeholder {
   font-family: AbeeZee;
   color: black;
