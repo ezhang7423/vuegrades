@@ -21,7 +21,7 @@
       <div>{{comp.weight}}%</div>
     </v-row>
     <div v-if="comp.isList">
-      <comcom v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
+      <comcom class="smallboi" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
     </div>
     <v-spacer></v-spacer>
     <v-row class="px-3 around">
@@ -32,7 +32,7 @@
     <template v-slot:activator="{ on }">-->
     <v-row class="pa-3 around">
       <span class="headline">Total score:</span>
-      <span class="headline">{{comp.grade}}%</span>
+      <span class="headline">{{round(comp.grade)}}%</span>
     </v-row>
     <!-- </template> -->
     <!-- </v-tooltip> -->
@@ -60,6 +60,9 @@ export default {
     calcGrad(grade, weight) {
       let num = (grade / 100) * weight;
       return Math.round((num + Number.EPSILON) * 100) / 100;
+    },
+    round(num) {
+      return Math.round((num + Number.EPSILON) * 100) / 100;
     }
   },
   computed: {
@@ -74,6 +77,9 @@ export default {
 </script>
 
 <style scoped>
+.smallboi {
+  width: 14vw;
+}
 .around {
   justify-content: space-between;
   margin: 0 1px;
