@@ -1,11 +1,13 @@
 import colors from "vuetify/es5/util/colors";
+const routerbase =
+  process.env.DEPLOY_ENV === "GH_PAGES"
+    ? "https://ezhang7423.github.io/vuegrades/"
+    : "/";
 
+console.log(routerbase);
 export default {
   router: {
-    base:
-      process.env.DEPLOY_ENV === "GH_PAGES"
-        ? "https://ezhang7423.github.io/vuegrades/"
-        : "/"
+    base: routerbase
   },
 
   mode: "universal",
