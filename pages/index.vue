@@ -4,7 +4,9 @@
       <NameInput v-show="name === ''" />
     </v-col>
     <v-row>
-      <v-col>this is {{internalState}}</v-col>
+      <no-ssr>
+        <CourseV :dat="internalState[0]" />
+      </no-ssr>
     </v-row>
   </v-layout>
 </template>
@@ -13,6 +15,7 @@
 import NameInput from "~/components/nameinput.vue";
 import { GradeComponent, Course } from "~/backend/classes";
 import * as helpers from "~/backend/helpers";
+import CourseV from "~/components/course.vue";
 export default {
   data() {
     return {};
@@ -67,7 +70,8 @@ export default {
   },
   methods: {},
   components: {
-    NameInput
+    NameInput,
+    CourseV
   }
 };
 </script>
