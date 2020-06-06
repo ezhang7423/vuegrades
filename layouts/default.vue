@@ -3,14 +3,15 @@
     <v-app-bar align app flat :collapse="!collapseOnScroll" :collapse-on-scroll="collapseOnScroll">
       <v-toolbar-title v-text="title" />
 
+      <input style="display: none" v-on:change="getData" type="file" ref="fileinput" />
       <!-- <v-switch v-model="$vuetify.theme.dark" primary label="Dark Mode"></v-switch> put in a settings modal-->
       <v-btn icon @click.stop="$store.commit('classes/newClass')">
         <v-icon>fa-plus-square</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
+      <v-btn icon @click.stop="download">
         <v-icon>fa-download</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
+      <v-btn icon @click.stop="importt">
         <v-icon>fa-file-import</v-icon>
       </v-btn>
       <v-btn icon @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark">
@@ -43,8 +44,47 @@ export default {
   data() {
     return {
       collapseOnScroll: true,
-      title: "GradeGrade"
+      title: "GradeGrade",
+      exportedData: null
     };
+  },
+  methods: {
+    simulateClick() {
+      return new MouseEvent("click", {
+        view: window,
+        bubbles: false,
+        cancelable: true
+      });
+    },
+    download() {
+      let textToSave = JSON.stringify(this.$store.state.classes);
+      let hiddenElement = window.document.createElement("a");
+      hiddenElement.href = "data:attachment/text," + encodeURI(textToSave);
+      hiddenElement.target = "_blank";
+      hiddenElement.download = `${this.$store.state.name.name}'s courses.json`;
+      hiddenElement.click();
+    },
+    importt() {
+      this.$refs.fileinput.click();
+    },
+    getData() {
+      this.$store.commit("classes/clear");
+      let file = this.$refs.fileinput.files[0];
+      if (file !== undefined) {
+        file.text().then(res => {
+          try {
+            let data = JSON.parse(res);
+
+            for (let x of data) {
+              this.$store.commit("classes/addClass", x);
+            }
+          } catch (e) {
+            alert("that file ain't valid ma boi");
+            throw "wrong file";
+          }
+        });
+      }
+    }
   }
 };
 </script>

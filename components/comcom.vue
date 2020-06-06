@@ -17,21 +17,18 @@ export default {
   data: () => {
     return {
       emAmt: {
-        1: 2.2,
-        2: 1.6,
-        3: 1.9,
-        4: 1.3,
-        5: 0.8
+        1: 2.7,
+        2: 2.1,
+        3: 2.4,
+        4: 1.8,
+        5: 1.3
       }
     };
-  },
-  mounted: function() {
-    // console.log(comp);
   },
   computed: {
     boi: function() {
       return this.comp.gradie === 100
-        ? "1"
+        ? "1.5"
         : this.emAmt[String(this.comp.gradie).length];
     }
   }
