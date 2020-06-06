@@ -17,11 +17,8 @@ export default {
   },
   computed: {
     boi: function() {
-      console.log(this.emAmt);
-      console.log(String(this.comp.gradie).length);
-      console.log(this.emAmt[String(this.comp.gradie).length]);
       return this.comp.gradie === 100
-        ? "1.5"
+        ? this.emAmt[3] - 0.9
         : this.emAmt[String(this.comp.gradie).length];
     }
   }
