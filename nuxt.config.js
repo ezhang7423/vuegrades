@@ -8,7 +8,13 @@ const routerBase =
       }
     : {};
 export default {
-  routerBase,
+  router: {
+    base:
+      process.env.DEPLOY_ENV === "GH_PAGES"
+        ? "https://github.com/ezhang7423/vuegrades"
+        : "/"
+  },
+
   mode: "universal",
   /*
    ** Headers of the page
