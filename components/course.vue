@@ -1,6 +1,13 @@
 <template >
   <v-card class="mx-4 golden" elevation="24">
-    <v-card-title class="px-6 display-1">{{boi.name}}</v-card-title>
+    <v-icon class="deleteicon">fa-times</v-icon>
+    <input
+      type="text"
+      class="px-6 display-1"
+      v-bind:class="{dark: $vuetify.theme.dark}"
+      :placeholder="boi.name"
+    />
+    <!-- <v-card-title class="px-6 display-1">{{boi.name}}</v-card-title> -->
     <v-col>
       <cc :comp="w" v-for="w in dat.weights" :key="w.name" />
       <v-btn class="my-2 mx-3">Advanced</v-btn>
@@ -49,8 +56,20 @@ export default {
 </script>
 
 <style scoped>
+::placeholder {
+  font-family: AbeeZee;
+  color: black;
+}
+.dark::placeholder {
+  color: white;
+}
+.deleteicon {
+  font-size: 0.8vw;
+  float: right;
+  margin: 0.5vw 0.5vw 0 0;
+}
 .golden {
-  width: 30.5%;
+  width: 17.2vw;
 }
 .pad4 {
   margin: 0 10px;

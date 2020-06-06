@@ -27,7 +27,9 @@ export default {
       this.$store.commit("classes/addClass", bois.x);
       this.$store.commit("classes/addClass", bois.y);
     } else {
-      console.log(this.internalState);
+      // let bois = helpers.addFake();
+      // this.$store.commit("classes/clear");
+      // this.$store.commit("classes/addClass", bois.y);
     }
   },
   computed: {

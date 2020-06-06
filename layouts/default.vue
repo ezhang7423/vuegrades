@@ -4,7 +4,7 @@
       <v-toolbar-title v-text="title" />
 
       <!-- <v-switch v-model="$vuetify.theme.dark" primary label="Dark Mode"></v-switch> put in a settings modal-->
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
+      <v-btn icon @click.stop="$store.commit('classes/newClass')">
         <v-icon>fa-plus-square</v-icon>
       </v-btn>
       <v-btn icon @click.stop="clipped = !clipped">

@@ -14,5 +14,8 @@ html {
   .v-text-field__prefix,
 .v-text-field.v-text-field--enclosed.v-text-field--single-line
   .v-text-field__suffix {
-  margin-top: 1.2px !important;
+  margin-top: 2px !important;
+}
+*:focus {
+  outline: none;
 }
