@@ -1,5 +1,5 @@
 <template >
-  <v-card class="mx-4" elevation="24">
+  <v-card class="mx-4 golden" elevation="24">
     <v-card-title class="px-6 display-1">{{boi.name}}</v-card-title>
     <v-col>
       <cc :comp="w" v-for="w in dat.weights" :key="w.name" />
@@ -9,6 +9,7 @@
         <div class="my-2 headline">Total:</div>
         <v-spacer></v-spacer>
         <div class="my-2 headline">{{calcSum(dat)}}%</div>
+        <!-- <div>{{boi}}</div> -->
       </v-row>
     </v-col>
     <v-spacer style="height: 20vh;"></v-spacer>
@@ -22,9 +23,7 @@ export default {
   props: {
     dat: Object
   },
-  mounted: function() {
-    // console.log(this.dat.weights[0].grade);
-  },
+  mounted: function() {},
   methods: {
     calcGrad(grade, weight) {
       let num = (grade / 100) * weight;
@@ -50,6 +49,9 @@ export default {
 </script>
 
 <style scoped>
+.golden {
+  width: 30.5%;
+}
 .pad4 {
   margin: 0 10px;
 }

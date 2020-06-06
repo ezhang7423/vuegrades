@@ -5,3 +5,14 @@ html {
 .v-application {
   font-family: AbeeZee !important;
 }
+
+/* .v-text-field.v-text-field--solo .v-label {
+  top: calc(50% - 9.6px);
+} */
+
+.v-text-field.v-text-field--enclosed.v-text-field--single-line
+  .v-text-field__prefix,
+.v-text-field.v-text-field--enclosed.v-text-field--single-line
+  .v-text-field__suffix {
+  margin-top: 1.2px !important;
+}
