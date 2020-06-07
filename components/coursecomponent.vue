@@ -20,7 +20,13 @@
             </v-hover>
           </template>
           <v-card>
-            <comcom :offset="0" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
+            <comcom
+              @changeSub="propUp"
+              :offset="0"
+              v-for="cc in comp.grad"
+              :key="cc.name"
+              :comp="cc"
+            />
           </v-card>
         </v-menu>
       </template>
@@ -40,7 +46,17 @@
     <v-tooltip right>
       <template v-slot:activator="{ on }">
         <span class="pewrapper" v-on="on">
-          <v-text-field class="goright" hide-details solo flat dense :suffix="`/${comp.weight}%`">
+          <v-text-field
+            class="goright"
+            @keyup.enter="changeGrade"
+            :disabled="comp.isList"
+            hide-details
+            solo
+            v-model="grade"
+            flat
+            dense
+            :suffix="`/${comp.weight}%`"
+          >
             <template v-slot:label>
               <span
                 :style="`padding-left: ${percentage === '100' ? '.4' : emAmt[percentage.length]}em`"
@@ -62,17 +78,29 @@ export default {
   },
   data: () => {
     return {
+      grade: "",
       name: "",
       emAmt: {
         1: 2.3,
         2: 1.7,
-        3: 2,
-        4: 1.4,
-        5: 0.9
+        3: 1.4,
+        4: 0.8,
+        5: 0.2
       }
     };
   },
   methods: {
+    propUp() {
+      this.$store.commit("comcom/change", { com: this.comp.name });
+      this.$emit("comcomChange");
+    },
+    changeGrade() {
+      let grade = Number(this.grade);
+      if (!isNaN(grade) && grade <= 100 && grade >= 0) {
+        this.$emit("changeGrade", [grade, this.comp.name]);
+        this.grade = "";
+      }
+    },
     calcGrad(grade, weight) {
       let num = (grade / 100) * weight;
       return Math.round((num + Number.EPSILON) * 100) / 100;
@@ -94,7 +122,7 @@ export default {
   width: 39%;
 }
 .pepwrapper {
-  max-width: 20%;
+  max-width: 46%;
 }
 
 .goright {

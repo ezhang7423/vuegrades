@@ -48,6 +48,18 @@ export default {
       exportedData: null
     };
   },
+  mounted: function() {
+    this.$store.commit("comcom/clear");
+    function disableSpellCheck() {
+      let selector = "input[type=text], textarea";
+      let textFields = window.document.querySelectorAll(selector);
+      textFields.forEach(function(field, _currentIndex, _listObj) {
+        field.spellcheck = false;
+      });
+    }
+
+    setTimeout(disableSpellCheck, 500);
+  },
   methods: {
     simulateClick() {
       return new MouseEvent("click", {

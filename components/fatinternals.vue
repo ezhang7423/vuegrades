@@ -6,7 +6,7 @@
     <v-card-title>
       <input type="text" style="width: 100%" v-bind:class="[size, dark]" :placeholder="dat.name" />
     </v-card-title>
-    <v-card-subtitle class="mx-1 display-2">{{calcSum(dat)}}% (A)</v-card-subtitle>
+    <v-card-subtitle class="mx-1 display-2">{{calcSum(dat)}}% ({{letterGrade(calcSum(dat))}})</v-card-subtitle>
     <div class="mx-8">
       <v-row class="centerme mx-0 mb-8">
         <ic :comp="w" v-for="w in dat.weights" :key="w.name" />
@@ -19,15 +19,16 @@
         <v-icon>fa-check-square</v-icon>
       </v-btn>
 
-      <v-card-actions class="alignbottom">
+      <!-- <v-card-actions class="alignbottom">
         <v-btn class="mbigg" text>Save</v-btn>
-      </v-card-actions>
+      </v-card-actions>-->
     </div>
   </v-card>
 </template>
 
 <script>
 import ic from "~/components/internalcomponent.vue";
+import { letterGrade } from "~/backend/helpers.js";
 export default {
   props: {
     dat: Object
@@ -36,9 +37,18 @@ export default {
     return {};
   },
   mounted: function() {
-    console.log(this.dat);
+    function disableSpellCheck() {
+      let selector = "input[type=text], textarea";
+      let textFields = window.document.querySelectorAll(selector);
+      textFields.forEach(function(field, _currentIndex, _listObj) {
+        field.spellcheck = false;
+      });
+    }
+
+    setTimeout(disableSpellCheck, 500);
   },
   methods: {
+    letterGrade,
     calcGrad(grade, weight) {
       let num = (grade / 100) * weight;
       return Math.round((num + Number.EPSILON) * 100) / 100;

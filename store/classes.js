@@ -31,6 +31,51 @@ export const mutations = {
       console.log("class not found");
     }
   },
+  changeSub(state, vue) {
+    let dat = vue.$store.state.comcom;
+    let index = find(state, dat.course);
+    if (index != -1) {
+      let j = findO(state[index].weights, dat.com);
+      if (j != -1) {
+        let com = state[index].weights[j];
+        let k = findO(com.grad, dat.comcom);
+        if (k != -1) {
+          let comcom = com.grad[k];
+          let newthing = dat.new;
+          if (dat.type == "name") {
+            let oldVals = Object.keys(com.grad).map(v => {
+              return com.grad[v].name;
+            });
+            if (!oldVals.includes(newthing) && newthing) {
+              comcom.name = newthing;
+            }
+          } else {
+            let grade = Number(dat.new);
+            if (!isNaN(grade) && grade <= 100 && grade >= 0) {
+              comcom.gradie = grade;
+              vue.$root.$emit("clearcomcom");
+            }
+          }
+          vue.$store.commit("comcom/clear");
+        } else {
+          console.log("subcomponent not found");
+        }
+      } else {
+        console.log("component not found");
+      }
+    } else {
+      console.log("class not found");
+    }
+  },
+  changeGrade(state, [grade, compname, name]) {
+    let index = find(state, name);
+    if (index != -1) {
+      let j = findO(state[index].weights, compname);
+      state[index].weights[j].grad = grade;
+    } else {
+      console.log("class not found");
+    }
+  },
   changeName(state, [nV, oV]) {
     let index = find(state, oV);
     if (index != -1) {

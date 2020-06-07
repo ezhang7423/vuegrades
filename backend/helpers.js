@@ -1750,11 +1750,7 @@ export function calcSum(data) {
 }
 
 export function letterGrade(data) {
-  let number = 0;
-  for (let i of Object.keys(data.weights)) {
-    number += calcGrad(data.weights[i].grade, data.weights[i].weight);
-  }
-  let numbergrade = number;
+  let numbergrade = data;
   if (numbergrade >= 97) {
     return "A+";
   } else if (numbergrade >= 93) {

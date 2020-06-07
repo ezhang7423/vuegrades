@@ -1,7 +1,26 @@
 <template>
   <v-row justify="start" no-gutters align="center">
-    <v-text-field class="nobord pepwrapper" hide-details solo flat dense :label="comp.name" />
-    <v-text-field class="nobord pewrapper" hide-details solo flat shaped dense :suffix="`/100%`">
+    <v-text-field
+      v-model="name"
+      @keyup.enter="editName"
+      class="nobord pepwrapper"
+      hide-details
+      solo
+      flat
+      dense
+      :label="comp.name"
+    />
+    <v-text-field
+      v-model="gradie"
+      class="nobord pewrapper"
+      @keyup.enter="editGrade"
+      hide-details
+      solo
+      flat
+      shaped
+      dense
+      :suffix="`/100%`"
+    >
       <template v-slot:label>
         <span :style="`padding-left: ${boi}em`">{{comp.gradie}}</span>
       </template>
@@ -10,10 +29,37 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: {
     comp: Object,
     offset: Number
+  },
+  mounted: function() {
+    this.$root.$on("clearcomcom", () => {
+      this.name = "";
+      this.gradie = "";
+    });
+  },
+  methods: {
+    editName: function() {
+      this.$store.commit("comcom/change", {
+        new: this.name,
+        old: this.comp.name,
+        type: "name",
+        comcom: this.comp.name
+      });
+      this.$emit("changeSub");
+    },
+    editGrade: function() {
+      this.$store.commit("comcom/change", {
+        new: this.gradie,
+        old: this.comp.gradie,
+        comcom: this.comp.name,
+        type: "grade"
+      });
+      this.$emit("changeSub");
+    }
   },
   computed: {
     boi: function() {
@@ -26,6 +72,8 @@ export default {
   },
   data: () => {
     return {
+      name: "",
+      gradie: "",
       emAmt: {
         1: 2.7,
         2: 2.1,

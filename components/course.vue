@@ -13,7 +13,14 @@
     />
     <!-- <v-card-title class="px-6 display-1">{{dat.name}}</v-card-title> -->
     <v-col>
-      <cc :comp="w" @changeCompName="editCompName" v-for="w in dat.weights" :key="w.name" />
+      <cc
+        :comp="w"
+        @comcomChange="editSub"
+        @changeGrade="editCompGrade"
+        @changeCompName="editCompName"
+        v-for="w in dat.weights"
+        :key="w.name"
+      />
       <v-btn @click.stop="advanced = true" class="my-2 mx-3">Advanced</v-btn>
       <v-divider></v-divider>
       <v-row class="pad4">
@@ -85,12 +92,19 @@ export default {
   //   // }
   // },
   methods: {
+    editSub() {
+      this.$store.commit("comcom/change", { course: this.dat.name });
+      this.$store.commit("classes/changeSub", this);
+    },
+    editCompGrade([gradee, name]) {
+      this.$store.commit("classes/changeGrade", [gradee, name, this.dat.name]);
+    },
     editCompName([nV, oV]) {
       let we = this.dat.weights;
       let oldVals = Object.keys(we).map(v => {
         return we[v].name;
       });
-      if (!oldVals.includes(nV)) {
+      if (!oldVals.includes(nV) && nV) {
         this.$store.commit("classes/changeComponentName", [
           nV,
           oV,
@@ -101,7 +115,7 @@ export default {
     editTitle() {
       let pot = this.$refs.title.value;
       let already = this.$store.getters["classes/getNames"];
-      if (!already.includes(pot)) {
+      if (!already.includes(pot) && pot) {
         this.$store.commit("classes/changeName", [pot, this.dat.name]);
       }
     },
