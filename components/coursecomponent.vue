@@ -20,7 +20,7 @@
             </v-hover>
           </template>
           <v-card>
-            <comcom :emAmt="internalEmAmt" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
+            <comcom :offset="0" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
           </v-card>
         </v-menu>
       </template>
@@ -53,13 +53,6 @@ export default {
   },
   data: () => {
     return {
-      internalEmAmt: {
-        1: 2.7,
-        2: 2.1,
-        3: 2.4,
-        4: 1.8,
-        5: 1.3
-      },
       emAmt: {
         1: 2.3,
         2: 1.7,

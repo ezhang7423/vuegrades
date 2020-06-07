@@ -19,3 +19,6 @@ html {
 *:focus {
   outline: none;
 }
+.nopadsp > div > div {
+  padding: 0 !important;
+}

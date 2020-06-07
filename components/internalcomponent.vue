@@ -1,6 +1,6 @@
 <template>
   <v-card
-    min-width="15vw"
+    min-width="15.5vw"
     min-height="52vh"
     :outlined="$vuetify.theme.dark"
     tile
@@ -16,23 +16,28 @@
     </v-btn>
 
     <v-text-field class="pepwrapper" hide-details solo flat dense :label="comp.name" />
-    <v-row class="px-3 around">
-      <div class="px-0 subtitle-1">Weight:</div>
-      <div>{{comp.weight}}%</div>
+    <v-row class="px-0 around" align="center">
+      <div style="font-family: AbeeZee !important;" class="px-3 subtitle-1">Weight:</div>
+      <v-text-field class="nopadsp pewrapper" hide-details solo flat dense>
+        <template v-slot:label>
+          <span :style="`padding-left: ${boi}em`">{{comp.weight}}%</span>
+        </template>
+      </v-text-field>
+      <!-- <div>{{comp.weight}}%</div> -->
     </v-row>
     <div v-if="comp.isList">
-      <comcom :emAmt="emAmt" class="smallboi" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
+      <comcom :offset="-3.7" class="smallboi" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
     </div>
     <v-spacer></v-spacer>
     <v-row class="px-3 around">
-      <div>Contribuition:</div>
+      <div>Contribution:</div>
       <div>{{percentage}}%</div>
     </v-row>
     <!-- <v-tooltip right>
     <template v-slot:activator="{ on }">-->
     <v-row class="pa-3 around">
-      <span class="headline">Total score:</span>
-      <span class="headline">{{round(comp.grade)}}%</span>
+      <span style="font-family: AbeeZee !important;" class="headline">Total score:</span>
+      <span style="font-family: AbeeZee !important;" class="headline">{{round(comp.grade)}}%</span>
     </v-row>
     <!-- </template> -->
     <!-- </v-tooltip> -->
@@ -68,6 +73,13 @@ export default {
   computed: {
     percentage() {
       return String(this.calcGrad(this.comp.grade, this.comp.weight));
+    },
+    boi: function() {
+      let f =
+        this.comp.weight === 100
+          ? this.emAmt[3] - 0.9
+          : this.emAmt[String(this.comp.weight).length];
+      return f - 3;
     }
   },
   components: {
@@ -78,7 +90,7 @@ export default {
 
 <style scoped>
 .smallboi {
-  width: 14vw;
+  width: 14.5vw;
 }
 .around {
   justify-content: space-between;
@@ -91,7 +103,7 @@ export default {
   float: right;
 }
 .pewrapper {
-  width: 39%;
+  max-width: 30%;
 }
 .pepwrapper {
   max-width: 20%;

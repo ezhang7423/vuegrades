@@ -13,14 +13,27 @@
 export default {
   props: {
     comp: Object,
-    emAmt: Object
+    offset: Number
   },
   computed: {
     boi: function() {
-      return this.comp.gradie === 100
-        ? this.emAmt[3] - 0.9
-        : this.emAmt[String(this.comp.gradie).length];
+      let f =
+        this.comp.gradie === 100
+          ? this.emAmt[3] - 0.9
+          : this.emAmt[String(this.comp.gradie).length];
+      return f - this.offset;
     }
+  },
+  data: () => {
+    return {
+      emAmt: {
+        1: 2.7,
+        2: 2.1,
+        3: 2.4,
+        4: 1.8,
+        5: 1.3
+      }
+    };
   }
 };
 </script>
