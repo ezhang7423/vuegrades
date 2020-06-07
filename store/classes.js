@@ -21,6 +21,14 @@ export const mutations = {
       console.log("class not found");
     }
   },
+  changeName(state, [nV, oV]) {
+    let index = find(state, oV);
+    if (index != -1) {
+      state[index].name = nV;
+    } else {
+      console.log("class not found");
+    }
+  },
   addClass(state, classs) {
     state.push(classs);
   },
@@ -33,5 +41,13 @@ export const mutations = {
   },
   clear(state) {
     state.length = 0;
+  }
+};
+
+export const getters = {
+  getNames(state) {
+    return state.map(v => {
+      return v.name;
+    });
   }
 };

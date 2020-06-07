@@ -3,16 +3,23 @@
     <v-btn @click.stop="dialog = true" icon class="deleteicon">
       <v-icon>fa-times</v-icon>
     </v-btn>
-    <input type="text" class="px-6" v-bind:class="[size, dark]" :placeholder="dat.name" />
+    <input
+      @keyup.enter="editTitle"
+      ref="title"
+      type="text"
+      class="px-6"
+      v-bind:class="[size, dark]"
+      :placeholder="dat.name"
+    />
     <!-- <v-card-title class="px-6 display-1">{{dat.name}}</v-card-title> -->
     <v-col>
       <cc :comp="w" v-for="w in dat.weights" :key="w.name" />
       <v-btn @click.stop="advanced = true" class="my-2 mx-3">Advanced</v-btn>
       <v-divider></v-divider>
       <v-row class="pad4">
-        <div class="my-2 headline">Total:</div>
+        <div class="my-2 headline" style="font-family: AbeeZee !important;">Total:</div>
         <v-spacer></v-spacer>
-        <div class="my-2 headline">{{calcSum(dat)}}%</div>
+        <div style="font-family: AbeeZee !important;" class="my-2 headline">{{calcSum(dat)}}%</div>
         <!-- <div>{{dat}}</div> -->
       </v-row>
     </v-col>
@@ -72,12 +79,19 @@ export default {
       // return "headlinee";
     }
   },
-  mounted: function() {
-    if (this.dat.name == "PSTAT120A") {
-      this.advanced = true;
-    }
-  },
+  // mounted: function() {
+  //   // if (this.dat.name == "PSTAT120A") {
+  //   //   this.advanced = true;
+  //   // }
+  // },
   methods: {
+    editTitle() {
+      let pot = this.$refs.title.value;
+      let already = this.$store.getters["classes/getNames"];
+      if (!already.includes(pot)) {
+        this.$store.commit("classes/changeName", [pot, this.dat.name]);
+      }
+    },
     deleteMe() {
       this.$store.commit("classes/deleteClass", this.dat.name);
     },
