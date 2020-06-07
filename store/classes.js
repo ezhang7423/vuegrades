@@ -10,6 +10,16 @@ function find(state, name) {
   }
   return -1;
 }
+function findO(state, name) {
+  let i = 0;
+  for (let x of Object.keys(state)) {
+    if (state[x].name === name) {
+      return i;
+    }
+    i++;
+  }
+  return -1;
+}
 
 export const state = () => [];
 export const mutations = {
@@ -25,6 +35,15 @@ export const mutations = {
     let index = find(state, oV);
     if (index != -1) {
       state[index].name = nV;
+    } else {
+      console.log("class not found");
+    }
+  },
+  changeComponentName(state, [nV, oV, name]) {
+    let index = find(state, name);
+    if (index != -1) {
+      let j = findO(state[index].weights, oV);
+      state[index].weights[j].name = nV;
     } else {
       console.log("class not found");
     }

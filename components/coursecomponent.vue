@@ -26,7 +26,16 @@
       </template>
     </v-btn>
 
-    <v-text-field class="pepwrapper" hide-details solo flat dense :label="comp.name" />
+    <v-text-field
+      @keyup.enter="$emit('changeCompName', [name, comp.name])"
+      class="pepwrapper"
+      hide-details
+      solo
+      flat
+      dense
+      v-model="name"
+      :label="comp.name"
+    />
     <v-spacer></v-spacer>
     <v-tooltip right>
       <template v-slot:activator="{ on }">
@@ -53,6 +62,7 @@ export default {
   },
   data: () => {
     return {
+      name: "",
       emAmt: {
         1: 2.3,
         2: 1.7,

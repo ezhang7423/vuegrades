@@ -13,7 +13,7 @@
     />
     <!-- <v-card-title class="px-6 display-1">{{dat.name}}</v-card-title> -->
     <v-col>
-      <cc :comp="w" v-for="w in dat.weights" :key="w.name" />
+      <cc :comp="w" @changeCompName="editCompName" v-for="w in dat.weights" :key="w.name" />
       <v-btn @click.stop="advanced = true" class="my-2 mx-3">Advanced</v-btn>
       <v-divider></v-divider>
       <v-row class="pad4">
@@ -85,6 +85,19 @@ export default {
   //   // }
   // },
   methods: {
+    editCompName([nV, oV]) {
+      let we = this.dat.weights;
+      let oldVals = Object.keys(we).map(v => {
+        return we[v].name;
+      });
+      if (!oldVals.includes(nV)) {
+        this.$store.commit("classes/changeComponentName", [
+          nV,
+          oV,
+          this.dat.name
+        ]);
+      }
+    },
     editTitle() {
       let pot = this.$refs.title.value;
       let already = this.$store.getters["classes/getNames"];
