@@ -145,6 +145,17 @@ export const mutations = {
       console.log("class not found");
     }
   },
+  addcomcom(state, [comp, course]) {
+    let index = find(state, course);
+    let grand = state[index].weights;
+    index = findO(grand, comp);
+    let dad = grand[index];
+    console.log(dad);
+    let comcomlen = Object.keys(dad.grad).length;
+    dad.grad[comcomlen] = { name: `${dad.name} ${storelen}`, gradie: 100 };
+    state.push("rerender");
+    state.pop();
+  },
   changeComponentName(state, [nV, oV, name]) {
     let index = find(state, name);
     if (index != -1) {

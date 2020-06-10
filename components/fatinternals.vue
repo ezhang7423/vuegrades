@@ -13,9 +13,7 @@
         :placeholder="dat.name"
       />
     </v-card-title>
-    <v-card-subtitle class="mx-1 display-2"
-      >{{ calcSum(dat) }}% ({{ letterGrade(calcSum(dat)) }})</v-card-subtitle
-    >
+    <v-card-subtitle class="mx-1 display-2">{{ calcSum(dat) }}% ({{ letterGrade(calcSum(dat)) }})</v-card-subtitle>
 
     <div class="mx-8">
       <v-row class="centerme mx-0 mb-8">
@@ -24,6 +22,8 @@
           @comcomChange="$emit('change', 'Sub')"
           @delcomcom="delcomcom"
           @changeCompName="changeCompName"
+          @changeGrade="editCompGrade"
+          @addcomcom="addcomcom"
           :comp="w"
           v-for="w in dat.weights"
           :key="w.name"
@@ -42,11 +42,7 @@
       <v-btn @click.stop="addComp('t')" class="my-2 mbigg" text>
         <v-icon>fa-check-square</v-icon>
       </v-btn>
-      <v-switch
-        @change="$root.$emit('editcomcom')"
-        class="mx-4 my-2 mbigg"
-        label="Delete Mode"
-      ></v-switch>
+      <v-switch @change="$root.$emit('editcomcom')" class="mx-4 my-2 mbigg" label="Delete Mode"></v-switch>
       <!-- <v-card-actions class="alignbottom">
         <v-btn class="mbigg" text>Save</v-btn>
       </v-card-actions>-->
@@ -170,6 +166,9 @@ export default {
         this.$root.$emit("clearweights");
       }, 200);
     },
+    addcomcom(compname) {
+      this.$store.commit("classes/addcomcom", [compname, this.dat.name]);
+    },
     calcGrad(grade, weight) {
       let num = (grade / 100) * weight;
       return Math.round((num + Number.EPSILON) * 100) / 100;
@@ -187,6 +186,9 @@ export default {
       } else {
         return 100;
       }
+    },
+    editCompGrade([gradee, name]) {
+      this.$store.commit("classes/changeGrade", [gradee, name, this.dat.name]);
     }
   },
   computed: {
