@@ -21,6 +21,19 @@ function findO(state, name) {
 
 export const state = () => [];
 export const mutations = {
+  delcomcom(state, obj) {
+    let index = find(state, obj.course);
+    let dad = state[index].weights;
+    index = findO(dad, obj.com);
+    dad = dad[index];
+    index = findO(dad.grad, obj.comcom);
+    console.log(index);
+    console.log(dad.grad);
+    delete dad.grad[index];
+    console.log(dad.grad);
+    state.push("rerender");
+    state.pop();
+  },
   deleteClass(state, name) {
     let index = find(state, name);
     if (index != -1) {

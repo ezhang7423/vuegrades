@@ -1,7 +1,13 @@
 <template>
   <v-row justify="start" no-gutters align="center">
     <!-- <v-slide-x-transition> -->
-    <v-btn class="mx-3" icon x-small v-show="editMode==true">
+    <v-btn
+      @click.stop="$emit('deletecomcom', comp.name)"
+      class="mx-3"
+      icon
+      x-small
+      v-show="editMode == true"
+    >
       <v-icon>fa-times</v-icon>
     </v-btn>
     <!-- </v-slide-x-transition> -->
@@ -28,7 +34,7 @@
       :suffix="`/100%`"
     >
       <template v-slot:label>
-        <span :style="`padding-left: ${boi}em`">{{comp.gradie}}</span>
+        <span :style="`padding-left: ${boi}em`">{{ comp.gradie }}</span>
       </template>
     </v-text-field>
   </v-row>

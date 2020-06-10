@@ -26,18 +26,28 @@
       :label="comp.name"
     />
     <v-row class="px-0 around" align="center">
-      <div style="font-family: AbeeZee !important;" class="px-3 subtitle-1">Weight:</div>
-      <v-text-field class="nopadsp pewrapper" hide-details v-model="weight" solo flat dense>
+      <div style="font-family: AbeeZee !important;" class="px-3 subtitle-1">
+        Weight:
+      </div>
+      <v-text-field
+        class="nopadsp pewrapper"
+        hide-details
+        v-model="weight"
+        solo
+        flat
+        dense
+      >
         <template v-slot:label>
-          <span :style="`padding-left: ${boi}em`">{{comp.weight}}%</span>
+          <span :style="`padding-left: ${boi}em`">{{ comp.weight }}%</span>
         </template>
       </v-text-field>
       <!-- <div>{{comp.weight}}%</div> -->
     </v-row>
     <div v-if="comp.isList">
       <comcom
-        :offset="editMode ? -.6 : -3.7"
+        :offset="editMode ? -0.6 : -3.7"
         @changeSub="propUp"
+        @deletecomcom="deleteComp"
         class="smallboi"
         v-for="cc in comp.grad"
         :key="cc.name"
@@ -51,17 +61,27 @@
     <v-spacer></v-spacer>
     <v-row class="px-3 around">
       <div>Contribution:</div>
-      <div>{{percentage}}%</div>
+      <div>{{ percentage }}%</div>
     </v-row>
     <!-- <v-tooltip right>
     <template v-slot:activator="{ on }">-->
-    <v-row v-if="comp.isList" class="pa-3 around" :class="{around: comp.isList}">
-      <span style="font-family: AbeeZee !important;" class="headline">Total score:</span>
-      <span style="font-family: AbeeZee !important;" class="headline">{{round(comp.grade)}}%</span>
+    <v-row
+      v-if="comp.isList"
+      class="pa-3 around"
+      :class="{ around: comp.isList }"
+    >
+      <span style="font-family: AbeeZee !important;" class="headline"
+        >Total score:</span
+      >
+      <span style="font-family: AbeeZee !important;" class="headline"
+        >{{ round(comp.grade) }}%</span
+      >
     </v-row>
     <template v-else>
       <v-row class="pa-3 around" align="center">
-        <span class="headline" style="font-family: AbeeZee !important;">Total score:</span>
+        <span class="headline" style="font-family: AbeeZee !important;"
+          >Total score:</span
+        >
 
         <input
           @keyup.enter="$emit('change', 'Title', [name, comp.name])"
@@ -69,7 +89,7 @@
           class="spewrapper headline pl-9"
           style="font-family: AbeeZee !important;"
           v-model="name"
-          v-bind:class="[size, dark]"
+          v-bind:class="[dark]"
           :placeholder="comp.name"
         />
         <!-- <div>{{comp.weight}}%</div> -->
@@ -102,6 +122,12 @@ export default {
     };
   },
   methods: {
+    deleteComp(name) {
+      this.$emit("delcomcom", {
+        comcom: name,
+        com: this.comp.name
+      });
+    },
     propUp() {
       this.$store.commit("comcom/change", { com: this.comp.name });
       this.$emit("comcomChange");

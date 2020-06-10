@@ -13,13 +13,16 @@
         :placeholder="dat.name"
       />
     </v-card-title>
-    <v-card-subtitle class="mx-1 display-2">{{calcSum(dat)}}% ({{letterGrade(calcSum(dat))}})</v-card-subtitle>
+    <v-card-subtitle class="mx-1 display-2"
+      >{{ calcSum(dat) }}% ({{ letterGrade(calcSum(dat)) }})</v-card-subtitle
+    >
 
     <div class="mx-8">
       <v-row class="centerme mx-0 mb-8">
         <ic
           @kill="deleteComp"
           @comcomChange="$emit('change', 'Sub')"
+          @delcomcom="delcomcom"
           @changeCompName="changeCompName"
           :comp="w"
           v-for="w in dat.weights"
@@ -33,7 +36,7 @@
         </v-btn>
       </div>
 
-      <v-btn @click.stop="addComp('l');" class="my-2 mbigg" text>
+      <v-btn @click.stop="addComp('l')" class="my-2 mbigg" text>
         <v-icon>fa-list</v-icon>
       </v-btn>
       <v-btn @click.stop="addComp('t')" class="my-2 mbigg" text>
@@ -42,7 +45,7 @@
       <v-switch
         @change="$root.$emit('editcomcom')"
         class="mx-4 my-2 mbigg"
-        label="Delete Subcomponents"
+        label="Delete Mode"
       ></v-switch>
       <!-- <v-card-actions class="alignbottom">
         <v-btn class="mbigg" text>Save</v-btn>
@@ -102,7 +105,12 @@ export default {
       }
       return -1;
     },
-
+    delcomcom(obj) {
+      this.$store.commit("classes/delcomcom", {
+        ...obj,
+        course: this.dat.name
+      });
+    },
     deleteComp(name) {
       let key = this.findO(this.dat.weights, name);
       if (key != -1) {
