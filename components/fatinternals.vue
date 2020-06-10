@@ -4,7 +4,14 @@
       <v-icon class="bigg">fa-times</v-icon>
     </v-btn>
     <v-card-title>
-      <input type="text" style="width: 100%" v-bind:class="[size, dark]" :placeholder="dat.name" />
+      <input
+        @keyup.enter="$emit('change', 'Title', [name, dat.name])"
+        type="text"
+        style="width: 100%"
+        v-model="name"
+        v-bind:class="[size, dark]"
+        :placeholder="dat.name"
+      />
     </v-card-title>
     <v-card-subtitle class="mx-1 display-2">{{calcSum(dat)}}% ({{letterGrade(calcSum(dat))}})</v-card-subtitle>
     <div class="mx-8">
@@ -34,9 +41,12 @@ export default {
     dat: Object
   },
   data: () => {
-    return {};
+    return { name: "" };
   },
   mounted: function() {
+    this.$root.$on("clearadvanced", () => {
+      this.name = "";
+    });
     function disableSpellCheck() {
       let selector = "input[type=text], textarea";
       let textFields = window.document.querySelectorAll(selector);
@@ -54,11 +64,16 @@ export default {
       return Math.round((num + Number.EPSILON) * 100) / 100;
     },
     calcSum(data) {
-      let sum = 0;
-      for (let i of Object.keys(data.weights)) {
-        sum += this.calcGrad(data.weights[i].grade, data.weights[i].weight);
+      console.log(data);
+      if (data && Object.keys(data).length !== 0) {
+        let sum = 0;
+        for (let i of Object.keys(data.weights)) {
+          sum += this.calcGrad(data.weights[i].grade, data.weights[i].weight);
+        }
+        return Math.round((sum + Number.EPSILON) * 100) / 100;
+      } else {
+        return 100;
       }
-      return Math.round((sum + Number.EPSILON) * 100) / 100;
     }
   },
   computed: {

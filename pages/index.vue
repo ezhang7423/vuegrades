@@ -5,20 +5,33 @@
     </v-col>
     <client-only>
       <v-row>
-        <CourseV v-for="course in internalState" :key="course.name" :dat="course" />
+        <CourseV
+          @advanced="setAdvanced"
+          v-for="course in internalState"
+          :key="course.name"
+          :dat="course"
+        />
       </v-row>
     </client-only>
+    <v-dialog v-model="advanced" fullscreen>
+      <advancedview @change="editData" @done="advanced = false" :dat="internalState[advindex]" />
+    </v-dialog>
   </v-layout>
 </template>
 
 <script>
+import advancedview from "~/components/fatinternals.vue";
 import NameInput from "~/components/nameinput.vue";
 import { GradeComponent, Course } from "~/backend/classes";
 import * as helpers from "~/backend/helpers";
 import CourseV from "~/components/course.vue";
 export default {
   data() {
-    return {};
+    return {
+      advanced: false,
+      advindex: 0,
+      advname: ""
+    };
   },
   mounted: function() {
     if (this.$store.state.classes.length == 0) {
@@ -32,12 +45,60 @@ export default {
       // this.$store.commit("classes/addClass", bois.y);
     }
   },
+  methods: {
+    editData(type, vals) {
+      let funcname = "edit" + type;
+      this[funcname](vals);
+      this.$root.$emit("clearadvanced");
+    },
+    editTitle([nV, oV]) {
+      let pot = nV;
+      let already = this.$store.getters["classes/getNames"];
+      if (!already.includes(pot) && pot) {
+        this.$store.commit("classes/changeName", [pot, oV]);
+      }
+    },
+    editSub() {
+      this.$store.commit("comcom/change", { course: this.advname });
+      this.$store.commit("classes/changeSub", this);
+    },
+    editCompGrade([gradee, name]) {
+      this.$store.commit("classes/changeGrade", [gradee, name, this.advname]);
+    },
+    editCompName([nV, oV]) {
+      let we = this.internalState[this.advindex].weights;
+      let oldVals = Object.keys(we).map(v => {
+        return we[v].name;
+      });
+      if (!oldVals.includes(nV) && nV) {
+        this.$store.commit("classes/changeComponentName", [
+          nV,
+          oV,
+          this.advname
+        ]);
+      }
+    },
+    find(state, name) {
+      let i = 0;
+      for (let x of state) {
+        if (x.name === name) {
+          return i;
+        }
+        i++;
+      }
+      return -1;
+    },
+    setAdvanced(name) {
+      this.advindex = this.find(this.internalState, name);
+      this.advname = name;
+      this.advanced = true;
+    }
+  },
   computed: {
     name: function() {
       return this.$store.state.name.name;
     },
     internalState: function() {
-      // try {
       let store = this.$store.state.classes;
       let act = [];
       if (store !== null) {
@@ -59,6 +120,7 @@ export default {
           }
           i++;
         }
+        setTimeout(() => (this.advname = this.advname), 0);
         return act;
       } else {
         return "";
@@ -70,10 +132,10 @@ export default {
       // }
     }
   },
-  methods: {},
   components: {
     NameInput,
-    CourseV
+    CourseV,
+    advancedview
   }
 };
 </script>

@@ -4,8 +4,8 @@
       <v-icon>fa-times</v-icon>
     </v-btn>
     <input
-      @keyup.enter="editTitle"
-      ref="title"
+      @keyup.enter="editTitle(title, dat.name)"
+      v-model="title"
       type="text"
       class="px-6"
       v-bind:class="[size, dark]"
@@ -21,7 +21,7 @@
         v-for="w in dat.weights"
         :key="w.name"
       />
-      <v-btn @click.stop="advanced = true" class="my-2 mx-3">Advanced</v-btn>
+      <v-btn @click.stop="setAdvanced" class="my-2 mx-3">Advanced</v-btn>
       <v-divider></v-divider>
       <v-row class="pad4">
         <div class="my-2 headline" style="font-family: AbeeZee !important;">Total:</div>
@@ -43,14 +43,9 @@
           <v-spacer></v-spacer>
 
           <v-btn color="green darken-1" text @click="dialog = false; deleteMe()">Yes</v-btn>
-
           <v-btn color="green darken-1" text @click="dialog = false">No</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="advanced" fullscreen>
-      <advancedview @done="advanced = false" :dat="dat" />
     </v-dialog>
   </v-card>
 </template>
@@ -58,15 +53,15 @@
 <script>
 import * as helpers from "~/backend/helpers";
 import cc from "~/components/coursecomponent.vue";
-import advancedview from "~/components/fatinternals.vue";
+
 export default {
   props: {
     dat: Object
   },
   data: () => {
     return {
-      advanced: false,
-      dialog: false
+      dialog: false,
+      title: ""
     };
   },
   computed: {
@@ -86,12 +81,17 @@ export default {
       // return "headlinee";
     }
   },
-  // mounted: function() {
-  //   // if (this.dat.name == "PSTAT120A") {
-  //   //   this.advanced = true;
-  //   // }
-  // },
+  mounted: function() {
+    // this.advanced = true;
+    // console.log(this.advanced);
+    // if (this.dat.name == "PSTAT120A") {
+    //   this.advanced = true;
+    // }
+  },
   methods: {
+    setAdvanced() {
+      this.$emit("advanced", this.dat.name);
+    },
     editSub() {
       this.$store.commit("comcom/change", { course: this.dat.name });
       this.$store.commit("classes/changeSub", this);
@@ -112,11 +112,11 @@ export default {
         ]);
       }
     },
-    editTitle() {
-      let pot = this.$refs.title.value;
+    editTitle(nV, oV) {
+      let pot = nV;
       let already = this.$store.getters["classes/getNames"];
       if (!already.includes(pot) && pot) {
-        this.$store.commit("classes/changeName", [pot, this.dat.name]);
+        this.$store.commit("classes/changeName", [pot, oV]);
       }
     },
     deleteMe() {
@@ -135,8 +135,7 @@ export default {
     }
   },
   components: {
-    cc,
-    advancedview
+    cc
   }
 };
 </script>
