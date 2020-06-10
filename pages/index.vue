@@ -99,6 +99,7 @@ export default {
       return this.$store.state.name.name;
     },
     internalState: function() {
+      console.log("UPDATE STATE!!!");
       let store = this.$store.state.classes;
       let act = [];
       try {
@@ -110,18 +111,20 @@ export default {
               weights.push(course.weights[component].weight);
             }
             act.push(new Course(course.name, weights));
+            let j = 0;
             for (let component of Object.keys(course.weights)) {
               if (typeof course.weights[component].grad === "object") {
-                act[i].weights[component].grad = course.weights[component].grad;
-                act[i].weights[component].isList = true;
+                act[i].weights[j].grad = course.weights[component].grad;
+                act[i].weights[j].isList = true;
               } else {
-                act[i].weights[component].grade =
-                  course.weights[component].grad;
+                act[i].weights[j].grade = course.weights[component].grad;
               }
-              act[i].weights[component].name = course.weights[component].name;
+              act[i].weights[j].name = course.weights[component].name;
+              j++;
             }
             i++;
           }
+          // throw "fuck";
           setTimeout(() => (this.advname = this.advname), 0);
           return act;
         } else {
@@ -130,9 +133,9 @@ export default {
       } catch (e) {
         console.log(e);
         console.log(this.$store.state.classes);
-        console.log("CLEARING STATE!!");
-        this.$store.commit("classes/clear");
-        window.location.reload();
+        // console.log("CLEARING STATE!!");
+        // this.$store.commit("classes/clear");
+        // window.location.reload();
       }
       // } catch (e) {
       //   console.log(e);

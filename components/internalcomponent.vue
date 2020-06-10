@@ -11,7 +11,7 @@
       <v-icon class="typeicon" v-if="!comp.isList">fa-check-square</v-icon>
       <v-icon v-else class="typeicon">fa-list</v-icon>
     </v-btn>
-    <v-btn @click.stop="$emit('kill')" icon class="deleteicon">
+    <v-btn @click.stop="$emit('kill', comp.name)" icon class="deleteicon">
       <v-icon class="bigg">fa-times</v-icon>
     </v-btn>
 
@@ -36,7 +36,7 @@
     </v-row>
     <div v-if="comp.isList">
       <comcom
-        :offset="-3.7"
+        :offset="editMode ? -.6 : -3.7"
         @changeSub="propUp"
         class="smallboi"
         v-for="cc in comp.grad"
@@ -44,6 +44,10 @@
         :comp="cc"
       />
     </div>
+
+    <v-btn v-if="comp.isList" class="mx-2" icon small>
+      <v-icon style="font-size: 15px;">fa-plus</v-icon>
+    </v-btn>
     <v-spacer></v-spacer>
     <v-row class="px-3 around">
       <div>Contribution:</div>
@@ -51,10 +55,27 @@
     </v-row>
     <!-- <v-tooltip right>
     <template v-slot:activator="{ on }">-->
-    <v-row class="pa-3 around">
+    <v-row v-if="comp.isList" class="pa-3 around" :class="{around: comp.isList}">
       <span style="font-family: AbeeZee !important;" class="headline">Total score:</span>
       <span style="font-family: AbeeZee !important;" class="headline">{{round(comp.grade)}}%</span>
     </v-row>
+    <template v-else>
+      <v-row class="pa-3 around" align="center">
+        <span class="headline" style="font-family: AbeeZee !important;">Total score:</span>
+
+        <input
+          @keyup.enter="$emit('change', 'Title', [name, comp.name])"
+          type="text"
+          class="spewrapper headline pl-9"
+          style="font-family: AbeeZee !important;"
+          v-model="name"
+          v-bind:class="[size, dark]"
+          :placeholder="comp.name"
+        />
+        <!-- <div>{{comp.weight}}%</div> -->
+      </v-row>
+    </template>
+
     <!-- </template> -->
     <!-- </v-tooltip> -->
   </v-card>
@@ -68,6 +89,7 @@ export default {
   },
   data: () => {
     return {
+      editMode: false,
       weight: "",
       name: "",
       emAmt: {
@@ -97,6 +119,10 @@ export default {
     }
   },
   mounted: function() {
+    this.$root.$on("editcomcom", () => {
+      this.editMode = !this.editMode;
+    });
+
     this.$root.$on("requestweights", () => {
       this.$root.$emit("weight", [
         this.comp.name,
@@ -105,11 +131,13 @@ export default {
       ]);
     });
     this.$root.$on("clearweights", () => {
-      console.log("receive clear weihts!");
       this.weight = "";
     });
   },
   computed: {
+    dark: function() {
+      return this.$vuetify.theme.dark ? "dark" : "";
+    },
     percentage() {
       return String(this.calcGrad(this.comp.grade, this.comp.weight));
     },
@@ -128,6 +156,12 @@ export default {
 </script>
 
 <style scoped>
+.dark::placeholder {
+  color: white;
+}
+.nobord {
+  border-radius: 0;
+}
 .smallboi {
   width: 14.5vw;
 }
@@ -141,6 +175,11 @@ export default {
 .deleteicon {
   float: right;
 }
+.spewrapper {
+  width: 5.5vw;
+  /* display: none; */
+}
+
 .pewrapper {
   max-width: 30%;
 }

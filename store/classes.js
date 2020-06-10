@@ -11,12 +11,10 @@ function find(state, name) {
   return -1;
 }
 function findO(state, name) {
-  let i = 0;
   for (let x of Object.keys(state)) {
     if (state[x].name === name) {
-      return i;
+      return x;
     }
-    i++;
   }
   return -1;
 }
@@ -81,9 +79,50 @@ export const mutations = {
     let sweight = state[index].weights;
     for (let w in weights) {
       let k = findO(sweight, w);
-      // console.log(weights[w]);
-      sweight[k].weight = Number(weights[w]);
+      if (k != -1) {
+        sweight[k].weight = Number(weights[w]);
+      } else {
+        console.log(sweight);
+        console.log(w);
+        console.log("Weight not found");
+      }
     }
+  },
+  addComp(state, [id, name]) {
+    let dad = state[find(state, name)];
+    try {
+      var storelen = Object.keys(dad.weights).reduce((a, b) => {
+        a = parseInt(a);
+        b = parseInt(b);
+        return a > b ? a : b;
+      });
+    } catch {
+      var storelen = -1;
+    }
+    storelen++;
+    if (id === "t") {
+      dad.weights[storelen] = new GradeComponent(
+        `Test ${storelen + 1}`,
+        100,
+        0
+      );
+    } else {
+      dad.weights[storelen] = new GradeComponent(
+        `Homework ${storelen + 1}`,
+        100,
+        0
+      );
+      dad.weights[storelen].grade = { "0": 100 };
+    }
+    state.push("rerender");
+    state.pop();
+  },
+  delComp(state, [name, coursename]) {
+    let dad = state[find(state, coursename)];
+    let key = findO(dad.weights, name);
+    delete dad.weights[key];
+    state.push("rerender");
+    state.pop();
   },
   changeName(state, [nV, oV]) {
     let index = find(state, oV);

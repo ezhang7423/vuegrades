@@ -18,6 +18,7 @@
     <div class="mx-8">
       <v-row class="centerme mx-0 mb-8">
         <ic
+          @kill="deleteComp"
           @comcomChange="$emit('change', 'Sub')"
           @changeCompName="changeCompName"
           :comp="w"
@@ -32,13 +33,17 @@
         </v-btn>
       </div>
 
-      <v-btn class="my-2 mbigg" text>
+      <v-btn @click.stop="addComp('l');" class="my-2 mbigg" text>
         <v-icon>fa-list</v-icon>
       </v-btn>
-      <v-btn class="my-2 mbigg" text>
+      <v-btn @click.stop="addComp('t')" class="my-2 mbigg" text>
         <v-icon>fa-check-square</v-icon>
       </v-btn>
-
+      <v-switch
+        @change="$root.$emit('editcomcom')"
+        class="mx-4 my-2 mbigg"
+        label="Delete Subcomponents"
+      ></v-switch>
       <!-- <v-card-actions class="alignbottom">
         <v-btn class="mbigg" text>Save</v-btn>
       </v-card-actions>-->
@@ -82,9 +87,35 @@ export default {
   },
   methods: {
     letterGrade,
+    addComp(val) {
+      this.$store.commit("classes/addComp", [val, this.dat.name]);
+    },
     setSnackbar(val) {
       this.snackbartext = val;
       this.snackbar = true;
+    },
+    findO(state, name) {
+      for (let x of Object.keys(state)) {
+        if (state[x].name === name) {
+          return x;
+        }
+      }
+      return -1;
+    },
+
+    deleteComp(name) {
+      let key = this.findO(this.dat.weights, name);
+      if (key != -1) {
+        if (this.dat.weights[key].weight != 0) {
+          this.setSnackbar("Please set this component's weight to 0 first.");
+          return;
+        }
+        this.$store.commit("classes/delComp", [name, this.dat.name]);
+      } else {
+        this.setSnackbar(
+          "Something went very wrong...this component could not be found!"
+        );
+      }
     },
     getWeights() {
       this.$root.$on("weight", ([k, v, o]) => {
@@ -139,7 +170,6 @@ export default {
       this.$emit("change", "CompName", names);
     },
     calcSum(data) {
-      // console.log(data);
       if (data && Object.keys(data).length !== 0) {
         let sum = 0;
         for (let i of Object.keys(data.weights)) {

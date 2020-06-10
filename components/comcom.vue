@@ -1,5 +1,10 @@
 <template>
   <v-row justify="start" no-gutters align="center">
+    <!-- <v-slide-x-transition> -->
+    <v-btn class="mx-3" icon x-small v-show="editMode==true">
+      <v-icon>fa-times</v-icon>
+    </v-btn>
+    <!-- </v-slide-x-transition> -->
     <v-text-field
       v-model="name"
       @keyup.enter="editName"
@@ -12,7 +17,8 @@
     />
     <v-text-field
       v-model="gradie"
-      class="nobord pewrapper"
+      class="nobord"
+      :class="editMode ? 'smallwrapper' : 'pewrapper'"
       @keyup.enter="editGrade"
       hide-details
       solo
@@ -36,6 +42,9 @@ export default {
     offset: Number
   },
   mounted: function() {
+    this.$root.$on("editcomcom", () => {
+      this.editMode = !this.editMode;
+    });
     this.$root.$on("clearcomcom", () => {
       this.name = "";
       this.gradie = "";
@@ -72,6 +81,7 @@ export default {
   },
   data: () => {
     return {
+      editMode: false,
       name: "",
       gradie: "",
       emAmt: {
@@ -89,12 +99,16 @@ export default {
 <style scoped>
 .nobord {
   border-radius: 0;
+  /* transition: width 10s; */
 }
 .boi {
   width: a;
 }
 .pewrapper {
   max-width: 67%;
+}
+.smallwrapper {
+  max-width: 50%;
 }
 .pepwrapper {
   max-width: 33%;

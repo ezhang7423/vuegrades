@@ -1,4 +1,4 @@
-class GradeComponent {
+export class GradeComponent {
   constructor(name, gradee, weight) {
     this.name = name;
     this.grad = gradee;
