@@ -14,11 +14,24 @@
       />
     </v-card-title>
     <v-card-subtitle class="mx-1 display-2">{{calcSum(dat)}}% ({{letterGrade(calcSum(dat))}})</v-card-subtitle>
+
     <div class="mx-8">
       <v-row class="centerme mx-0 mb-8">
-        <ic :comp="w" v-for="w in dat.weights" :key="w.name" />
+        <ic
+          @comcomChange="$emit('change', 'Sub')"
+          @changeCompName="changeCompName"
+          :comp="w"
+          v-for="w in dat.weights"
+          :key="w.name"
+        />
       </v-row>
       <v-divider></v-divider>
+      <div>
+        <v-btn @click="getWeights" class="my-2 mbigg" text>
+          <span>Update Weights</span>
+        </v-btn>
+      </div>
+
       <v-btn class="my-2 mbigg" text>
         <v-icon>fa-list</v-icon>
       </v-btn>
@@ -30,6 +43,10 @@
         <v-btn class="mbigg" text>Save</v-btn>
       </v-card-actions>-->
     </div>
+    <v-snackbar v-model="snackbar">
+      {{ snackbartext }}
+      <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -41,7 +58,13 @@ export default {
     dat: Object
   },
   data: () => {
-    return { name: "" };
+    return {
+      name: "",
+      weights: {},
+      snackbar: false,
+      snackbartext: "",
+      oldweights: {}
+    };
   },
   mounted: function() {
     this.$root.$on("clearadvanced", () => {
@@ -59,12 +82,64 @@ export default {
   },
   methods: {
     letterGrade,
+    setSnackbar(val) {
+      this.snackbartext = val;
+      this.snackbar = true;
+    },
+    getWeights() {
+      this.$root.$on("weight", ([k, v, o]) => {
+        this.weights[k] = v;
+        this.oldweights[k] = o;
+      });
+      this.$root.$emit("requestweights");
+      setTimeout(() => {
+        let total = 0;
+        let notset = [];
+        for (let w in this.weights) {
+          if (this.weights[w] === "") {
+            notset.push(w);
+          }
+          try {
+            let pot = Number(this.weights[w]);
+            if (isNaN(pot)) {
+              this.setSnackbar("Weights are invalid");
+              return;
+            }
+            total += pot;
+          } catch {
+            this.setSnackbar("Weights are invalid");
+            return;
+          }
+        }
+        let notTotal = 0;
+        for (let i of notset) {
+          notTotal += Number(this.oldweights[i]);
+          delete this.weights[i];
+        }
+
+        if (total != 100 - notTotal) {
+          this.setSnackbar(
+            "Weights do not add up to " + String(100 - notTotal)
+          );
+          return;
+        }
+
+        this.$store.commit("classes/changeWeights", [
+          this.dat.name,
+          this.weights
+        ]);
+        this.$root.$emit("clearweights");
+      }, 200);
+    },
     calcGrad(grade, weight) {
       let num = (grade / 100) * weight;
       return Math.round((num + Number.EPSILON) * 100) / 100;
     },
+    changeCompName(names) {
+      this.$emit("change", "CompName", names);
+    },
     calcSum(data) {
-      console.log(data);
+      // console.log(data);
       if (data && Object.keys(data).length !== 0) {
         let sum = 0;
         for (let i of Object.keys(data.weights)) {

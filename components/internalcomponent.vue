@@ -15,10 +15,19 @@
       <v-icon class="bigg">fa-times</v-icon>
     </v-btn>
 
-    <v-text-field class="pepwrapper" hide-details solo flat dense :label="comp.name" />
+    <v-text-field
+      class="pepwrapper"
+      @keyup.enter="$emit('changeCompName', [name, comp.name])"
+      v-model="name"
+      hide-details
+      solo
+      flat
+      dense
+      :label="comp.name"
+    />
     <v-row class="px-0 around" align="center">
       <div style="font-family: AbeeZee !important;" class="px-3 subtitle-1">Weight:</div>
-      <v-text-field class="nopadsp pewrapper" hide-details solo flat dense>
+      <v-text-field class="nopadsp pewrapper" hide-details v-model="weight" solo flat dense>
         <template v-slot:label>
           <span :style="`padding-left: ${boi}em`">{{comp.weight}}%</span>
         </template>
@@ -26,7 +35,14 @@
       <!-- <div>{{comp.weight}}%</div> -->
     </v-row>
     <div v-if="comp.isList">
-      <comcom :offset="-3.7" class="smallboi" v-for="cc in comp.grad" :key="cc.name" :comp="cc" />
+      <comcom
+        :offset="-3.7"
+        @changeSub="propUp"
+        class="smallboi"
+        v-for="cc in comp.grad"
+        :key="cc.name"
+        :comp="cc"
+      />
     </div>
     <v-spacer></v-spacer>
     <v-row class="px-3 around">
@@ -52,6 +68,8 @@ export default {
   },
   data: () => {
     return {
+      weight: "",
+      name: "",
       emAmt: {
         1: 6,
         2: 5.4,
@@ -62,13 +80,34 @@ export default {
     };
   },
   methods: {
+    propUp() {
+      this.$store.commit("comcom/change", { com: this.comp.name });
+      this.$emit("comcomChange");
+    },
     calcGrad(grade, weight) {
       let num = (grade / 100) * weight;
       return Math.round((num + Number.EPSILON) * 100) / 100;
     },
     round(num) {
       return Math.round((num + Number.EPSILON) * 100) / 100;
+    },
+    propUp() {
+      this.$store.commit("comcom/change", { com: this.comp.name });
+      this.$emit("comcomChange");
     }
+  },
+  mounted: function() {
+    this.$root.$on("requestweights", () => {
+      this.$root.$emit("weight", [
+        this.comp.name,
+        this.weight,
+        this.comp.weight
+      ]);
+    });
+    this.$root.$on("clearweights", () => {
+      console.log("receive clear weihts!");
+      this.weight = "";
+    });
   },
   computed: {
     percentage() {
@@ -106,7 +145,7 @@ export default {
   max-width: 30%;
 }
 .pepwrapper {
-  max-width: 20%;
+  /* max-width: 50%; */
 }
 
 .goright {

@@ -30,7 +30,7 @@ export default {
     return {
       advanced: false,
       advindex: 0,
-      advname: ""
+      advname: "PSTAT 120A"
     };
   },
   mounted: function() {
@@ -101,29 +101,38 @@ export default {
     internalState: function() {
       let store = this.$store.state.classes;
       let act = [];
-      if (store !== null) {
-        let i = 0;
-        for (let course of store) {
-          let weights = [];
-          for (let component of Object.keys(course.weights)) {
-            weights.push(course.weights[component].weight);
-          }
-          act.push(new Course(course.name, weights));
-          for (let component of Object.keys(course.weights)) {
-            if (typeof course.weights[component].grad === "object") {
-              act[i].weights[component].grad = course.weights[component].grad;
-              act[i].weights[component].isList = true;
-            } else {
-              act[i].weights[component].grade = course.weights[component].grad;
+      try {
+        if (store !== null) {
+          let i = 0;
+          for (let course of store) {
+            let weights = [];
+            for (let component of Object.keys(course.weights)) {
+              weights.push(course.weights[component].weight);
             }
-            act[i].weights[component].name = course.weights[component].name;
+            act.push(new Course(course.name, weights));
+            for (let component of Object.keys(course.weights)) {
+              if (typeof course.weights[component].grad === "object") {
+                act[i].weights[component].grad = course.weights[component].grad;
+                act[i].weights[component].isList = true;
+              } else {
+                act[i].weights[component].grade =
+                  course.weights[component].grad;
+              }
+              act[i].weights[component].name = course.weights[component].name;
+            }
+            i++;
           }
-          i++;
+          setTimeout(() => (this.advname = this.advname), 0);
+          return act;
+        } else {
+          return "";
         }
-        setTimeout(() => (this.advname = this.advname), 0);
-        return act;
-      } else {
-        return "";
+      } catch (e) {
+        console.log(e);
+        console.log(this.$store.state.classes);
+        console.log("CLEARING STATE!!");
+        this.$store.commit("classes/clear");
+        window.location.reload();
       }
       // } catch (e) {
       //   console.log(e);

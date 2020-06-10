@@ -76,6 +76,15 @@ export const mutations = {
       console.log("class not found");
     }
   },
+  changeWeights(state, [name, weights]) {
+    let index = find(state, name);
+    let sweight = state[index].weights;
+    for (let w in weights) {
+      let k = findO(sweight, w);
+      // console.log(weights[w]);
+      sweight[k].weight = Number(weights[w]);
+    }
+  },
   changeName(state, [nV, oV]) {
     let index = find(state, oV);
     if (index != -1) {
@@ -88,7 +97,11 @@ export const mutations = {
     let index = find(state, name);
     if (index != -1) {
       let j = findO(state[index].weights, oV);
-      state[index].weights[j].name = nV;
+      if (j != -1) {
+        state[index].weights[j].name = nV;
+      } else {
+        console.log("component not found");
+      }
     } else {
       console.log("class not found");
     }
