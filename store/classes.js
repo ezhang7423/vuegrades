@@ -27,12 +27,14 @@ export const mutations = {
     index = findO(dad, obj.com);
     dad = dad[index];
     index = findO(dad.grad, obj.comcom);
-    console.log(index);
-    console.log(dad.grad);
-    delete dad.grad[index];
-    console.log(dad.grad);
-    state.push("rerender");
-    state.pop();
+    // console.log(index);
+    // console.log(dad.grad);
+    if (Object.keys(dad.grad).length > 1) {
+      delete dad.grad[index];
+      // console.log(dad.grad);
+      state.push("rerender");
+      state.pop();
+    }
   },
   deleteClass(state, name) {
     let index = find(state, name);
@@ -150,9 +152,17 @@ export const mutations = {
     let grand = state[index].weights;
     index = findO(grand, comp);
     let dad = grand[index];
-    console.log(dad);
-    let comcomlen = Object.keys(dad.grad).length;
-    dad.grad[comcomlen] = { name: `${dad.name} ${storelen}`, gradie: 100 };
+    try {
+      var storelen = Object.keys(dad.grad).reduce((a, b) => {
+        a = parseInt(a);
+        b = parseInt(b);
+        return a > b ? a : b;
+      });
+    } catch {
+      var storelen = -1;
+    }
+    storelen++;
+    dad.grad[storelen] = { name: `${dad.name} ${storelen}`, gradie: 100 };
     state.push("rerender");
     state.pop();
   },

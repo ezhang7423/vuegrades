@@ -13,7 +13,9 @@
         :placeholder="dat.name"
       />
     </v-card-title>
-    <v-card-subtitle class="mx-1 display-2">{{ calcSum(dat) }}% ({{ letterGrade(calcSum(dat)) }})</v-card-subtitle>
+    <v-card-subtitle class="mx-1 display-2"
+      >{{ calcSum(dat) }}% ({{ letterGrade(calcSum(dat)) }})</v-card-subtitle
+    >
 
     <div class="mx-8">
       <v-row class="centerme mx-0 mb-8">
@@ -42,7 +44,11 @@
       <v-btn @click.stop="addComp('t')" class="my-2 mbigg" text>
         <v-icon>fa-check-square</v-icon>
       </v-btn>
-      <v-switch @change="$root.$emit('editcomcom')" class="mx-4 my-2 mbigg" label="Delete Mode"></v-switch>
+      <v-switch
+        @change="$store.commit('advanced/toggleEdit')"
+        class="mx-4 my-2 mbigg"
+        label="Delete Mode"
+      ></v-switch>
       <!-- <v-card-actions class="alignbottom">
         <v-btn class="mbigg" text>Save</v-btn>
       </v-card-actions>-->
@@ -71,6 +77,9 @@ export default {
     };
   },
   mounted: function() {
+    if (this.$store.state.advanced.editmode) {
+      this.$store.commit("advanced/toggleEdit");
+    }
     this.$root.$on("clearadvanced", () => {
       this.name = "";
     });

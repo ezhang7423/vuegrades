@@ -48,9 +48,6 @@ export default {
     offset: Number
   },
   mounted: function() {
-    this.$root.$on("editcomcom", () => {
-      this.editMode = !this.editMode;
-    });
     this.$root.$on("clearcomcom", () => {
       this.name = "";
       this.gradie = "";
@@ -77,6 +74,9 @@ export default {
     }
   },
   computed: {
+    editMode: function() {
+      return this.$store.state.advanced.editmode;
+    },
     boi: function() {
       let f =
         this.comp.gradie === 100
@@ -87,7 +87,6 @@ export default {
   },
   data: () => {
     return {
-      editMode: false,
       name: "",
       gradie: "",
       emAmt: {
