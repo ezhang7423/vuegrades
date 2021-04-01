@@ -2,6 +2,11 @@
 [![Build Status](https://travis-ci.org/ezhang7423/vuegrades.svg?branch=master)](https://travis-ci.org/ezhang7423/vuegrades)
 > calc ur grades bruh
 
+## Deployment
+
+On push to master, travis ci runs `npm run generate` which creates static html with nuxt. These files are then pushed to `gh-pages`, where github then
+hosts the static files. There is also a back4app project setup.
+
 ## Build Setup
 
 ```bash
