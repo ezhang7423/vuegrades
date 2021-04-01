@@ -24,11 +24,11 @@
         <v-icon>fa-cog</v-icon>
       </v-btn>
     </v-app-bar>
-    <v-content>
+    <v-main>
       <v-container>
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
 
     <v-footer app>
       <v-btn icon href="https://github.com/ezhang7423/vuegrades" target="_blank">

@@ -14,7 +14,11 @@
       </v-row>
     </client-only>
     <v-dialog v-model="advanced" fullscreen>
-      <advancedview @change="editData" @done="advanced = false" :dat="internalState[advindex]" />
+      <advancedview
+        @change="editData"
+        @done="advanced = false"
+        :dat="internalState[advindex]"
+      />
     </v-dialog>
   </v-layout>
 </template>
@@ -30,10 +34,11 @@ export default {
     return {
       advanced: false,
       advindex: 0,
-      advname: "PSTAT 120A"
+      advname: "PSTAT 120A",
     };
   },
-  mounted: function() {
+  mounted: function () {
+    // this.signUp();
     if (this.$store.state.classes.length == 0) {
       console.log(this.internalState);
       let bois = helpers.addFake();
@@ -46,6 +51,28 @@ export default {
     }
   },
   methods: {
+    async signUp() {
+      // Create a new instance of the user class
+      var user = new this.$parse.User();
+      user.set("username", "my name");
+      user.set("password", "my pass");
+      user.set("email", "email@example.com");
+
+      // other fields can be set just like with Parse.Object
+      user.set("phone", "415-392-0202");
+
+      try {
+        let res = await user.signUp();
+        console.log(
+          "User created successful with name: " +
+            res.get("username") +
+            " and email: " +
+            res.get("email")
+        );
+      } catch (e) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    },
     editData(type, vals) {
       let funcname = "edit" + type;
       this[funcname](vals);
@@ -67,14 +94,14 @@ export default {
     },
     editCompName([nV, oV]) {
       let we = this.internalState[this.advindex].weights;
-      let oldVals = Object.keys(we).map(v => {
+      let oldVals = Object.keys(we).map((v) => {
         return we[v].name;
       });
       if (!oldVals.includes(nV) && nV) {
         this.$store.commit("classes/changeComponentName", [
           nV,
           oV,
-          this.advname
+          this.advname,
         ]);
       }
     },
@@ -92,13 +119,13 @@ export default {
       this.advindex = this.find(this.internalState, name);
       this.advname = name;
       this.advanced = true;
-    }
+    },
   },
   computed: {
-    name: function() {
+    name: function () {
       return this.$store.state.name.name;
     },
-    internalState: function() {
+    internalState: function () {
       console.log("UPDATE STATE!!!");
       let store = this.$store.state.classes;
       let act = [];
@@ -142,12 +169,12 @@ export default {
       //   return "";
       //   //display to user
       // }
-    }
+    },
   },
   components: {
     NameInput,
     CourseV,
-    advancedview
-  }
+    advancedview,
+  },
 };
 </script>

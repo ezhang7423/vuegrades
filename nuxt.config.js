@@ -8,7 +8,6 @@ export default {
     base: routerbase
   },
 
-  mode: "universal",
   /*
    ** Headers of the page
    */
@@ -50,13 +49,13 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     "@nuxtjs/dotenv",
     // Doc: https://github.com/cierrateam/nuxt-parse
-    // [
-    //   ("nuxt-parse",
-    //   {
-    //     appId: "JloiWz15PK7vNzbgy3aDVvqyUL12eol2FQtBHeXc",
-    //     javascriptKey: "1nLuoZSIlnNLTlbUY9ARyiaY3SFi2YiGLgZJFCyJ"
-    //   })
-    // ]
+    [
+      "nuxt-parse",
+      {
+        appId: "JloiWz15PK7vNzbgy3aDVvqyUL12eol2FQtBHeXc",
+        javascriptKey: "1nLuoZSIlnNLTlbUY9ARyiaY3SFi2YiGLgZJFCyJ"
+      }
+    ]
   ],
   /*
    ** Axios module configuration
