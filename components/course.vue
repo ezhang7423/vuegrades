@@ -36,7 +36,7 @@
     </v-col>
     <v-spacer></v-spacer>
     <v-dialog v-model="dialog" hide-overlay max-width="12vw">
-      <v-card style="min-height: 22vh">
+      <v-card>
         <v-card-title class="headline breaknormal">
           Are you sure you want to delete
           <br />
