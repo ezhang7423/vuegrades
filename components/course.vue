@@ -8,6 +8,7 @@
       v-model="title"
       type="text"
       class="px-6"
+      style="color: white"
       v-bind:class="[size, dark]"
       :placeholder="dat.name"
     />

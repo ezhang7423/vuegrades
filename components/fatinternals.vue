@@ -7,7 +7,7 @@
       <input
         @keyup.enter="$emit('change', 'Title', [name, dat.name])"
         type="text"
-        style="width: 100%"
+        style="width: 100%; color: white"
         v-model="name"
         v-bind:class="[size, dark]"
         :placeholder="dat.name"

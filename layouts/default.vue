@@ -14,10 +14,9 @@
       <v-btn icon @click.stop="importt">
         <v-icon>fa-file-import</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark">
+      <!-- <v-btn icon @click.stop="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>fa-moon</v-icon>
-        <!-- make into full fledged modal later -->
-      </v-btn>
+      </v-btn> -->
       <v-spacer />
       <v-toolbar-title v-text="'Welcome back ' + $store.state.name.name " />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
