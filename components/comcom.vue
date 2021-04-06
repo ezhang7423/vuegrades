@@ -34,7 +34,7 @@
       :suffix="`/100%`"
     >
       <template v-slot:label>
-        <span :style="`padding-left: ${boi}em`">{{ comp.gradie }}</span>
+        <span style="text-align: right">{{ comp.gradie }}</span>
       </template>
     </v-text-field>
   </v-row>
@@ -45,45 +45,45 @@ import { mapState } from "vuex";
 export default {
   props: {
     comp: Object,
-    offset: Number
+    offset: Number,
   },
-  mounted: function() {
+  mounted: function () {
     this.$root.$on("clearcomcom", () => {
       this.name = "";
       this.gradie = "";
     });
   },
   methods: {
-    editName: function() {
+    editName: function () {
       this.$store.commit("comcom/change", {
         new: this.name,
         old: this.comp.name,
         type: "name",
-        comcom: this.comp.name
+        comcom: this.comp.name,
       });
       this.$emit("changeSub");
     },
-    editGrade: function() {
+    editGrade: function () {
       this.$store.commit("comcom/change", {
         new: this.gradie,
         old: this.comp.gradie,
         comcom: this.comp.name,
-        type: "grade"
+        type: "grade",
       });
       this.$emit("changeSub");
-    }
+    },
   },
   computed: {
-    editMode: function() {
+    editMode: function () {
       return this.$store.state.advanced.editmode;
     },
-    boi: function() {
+    boi: function () {
       let f =
         this.comp.gradie === 100
           ? this.emAmt[3] - 0.9
           : this.emAmt[String(this.comp.gradie).length];
       return f - this.offset;
-    }
+    },
   },
   data: () => {
     return {
@@ -94,10 +94,10 @@ export default {
         2: 2.1,
         3: 2.4,
         4: 1.8,
-        5: 1.3
-      }
+        5: 1.3,
+      },
     };
-  }
+  },
 };
 </script>
 

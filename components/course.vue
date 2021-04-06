@@ -24,25 +24,37 @@
       <v-btn @click.stop="setAdvanced" class="my-2 mx-3">Advanced</v-btn>
       <v-divider></v-divider>
       <v-row class="pad4">
-        <div class="my-2 headline" style="font-family: AbeeZee !important;">Total:</div>
+        <div class="my-2 headline" style="font-family: AbeeZee !important">
+          Total:
+        </div>
         <v-spacer></v-spacer>
-        <div style="font-family: AbeeZee !important;" class="my-2 headline">{{calcSum(dat)}}%</div>
+        <div style="font-family: AbeeZee !important" class="my-2 headline">
+          {{ calcSum(dat) }}%
+        </div>
         <!-- <div>{{dat}}</div> -->
       </v-row>
     </v-col>
-    <v-spacer style="height: 20vh;"></v-spacer>
+    <v-spacer></v-spacer>
     <v-dialog v-model="dialog" hide-overlay max-width="12vw">
       <v-card style="min-height: 22vh">
         <v-card-title class="headline breaknormal">
           Are you sure you want to delete
           <br />
-          {{dat.name}}?
+          {{ dat.name }}?
         </v-card-title>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="green darken-1" text @click="dialog = false; deleteMe()">Yes</v-btn>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="
+              dialog = false;
+              deleteMe();
+            "
+            >Yes</v-btn
+          >
           <v-btn color="green darken-1" text @click="dialog = false">No</v-btn>
         </v-card-actions>
       </v-card>
@@ -56,19 +68,19 @@ import cc from "~/components/coursecomponent.vue";
 
 export default {
   props: {
-    dat: Object
+    dat: Object,
   },
   data: () => {
     return {
       dialog: false,
-      title: ""
+      title: "",
     };
   },
   computed: {
-    dark: function() {
+    dark: function () {
       return this.$vuetify.theme.dark ? "dark" : "";
     },
-    size: function() {
+    size: function () {
       let length = this.dat.name.length;
       if (length >= 22) {
         return "lh headlinee";
@@ -79,9 +91,9 @@ export default {
         return "lh display-1";
       }
       // return "headlinee";
-    }
+    },
   },
-  mounted: function() {
+  mounted: function () {
     // this.advanced = true;
     // console.log(this.advanced);
     // if (this.dat.name == "PSTAT120A") {
@@ -101,14 +113,14 @@ export default {
     },
     editCompName([nV, oV]) {
       let we = this.dat.weights;
-      let oldVals = Object.keys(we).map(v => {
+      let oldVals = Object.keys(we).map((v) => {
         return we[v].name;
       });
       if (!oldVals.includes(nV) && nV) {
         this.$store.commit("classes/changeComponentName", [
           nV,
           oV,
-          this.dat.name
+          this.dat.name,
         ]);
       }
     },
@@ -132,11 +144,11 @@ export default {
         sum += this.calcGrad(data.weights[i].grade, data.weights[i].weight);
       }
       return Math.round((sum + Number.EPSILON) * 100) / 100;
-    }
+    },
   },
   components: {
-    cc
-  }
+    cc,
+  },
 };
 </script>
 
@@ -167,8 +179,10 @@ export default {
   margin: 0.5vw 0.5vw 0 0;
 }
 .golden {
-  width: 17.2vw;
+  width: 350px;
+  height: 563.5px;
 }
+
 .pad4 {
   margin: 0 10px;
 }

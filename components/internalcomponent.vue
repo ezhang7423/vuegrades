@@ -1,11 +1,11 @@
 <template>
   <v-card
     min-width="15.5vw"
-    min-height="52vh"
+    min-height="300px"
     :outlined="$vuetify.theme.dark"
     tile
     elevation="24"
-    class="mr-8 pa-2"
+    class="mr-8 pa-2 mt-3"
   >
     <v-btn icon>
       <v-icon class="typeicon" v-if="!comp.isList">fa-check-square</v-icon>
@@ -26,8 +26,17 @@
       :label="comp.name"
     />
     <v-row class="px-0 around" align="center">
-      <div style="font-family: AbeeZee !important;" class="px-3 subtitle-1">Weight:</div>
-      <v-text-field class="nopadsp pewrapper" hide-details v-model="weight" solo flat dense>
+      <div style="font-family: AbeeZee !important" class="px-3 subtitle-1">
+        Weight:
+      </div>
+      <v-text-field
+        class="nopadsp pewrapper"
+        hide-details
+        v-model="weight"
+        solo
+        flat
+        dense
+      >
         <template v-slot:label>
           <span :style="`padding-left: ${boi}em`">{{ comp.weight }}%</span>
         </template>
@@ -47,7 +56,7 @@
     </div>
 
     <v-btn @click="addComcom" v-if="comp.isList" class="mx-2" icon small>
-      <v-icon style="font-size: 15px;">fa-plus</v-icon>
+      <v-icon style="font-size: 15px">fa-plus</v-icon>
     </v-btn>
     <v-spacer></v-spacer>
     <v-row class="px-3 around">
@@ -56,22 +65,32 @@
     </v-row>
     <!-- <v-tooltip right>
     <template v-slot:activator="{ on }">-->
-    <v-row v-if="comp.isList" class="pa-3 around" :class="{ around: comp.isList }">
-      <span style="font-family: AbeeZee !important;" class="headline">Total score:</span>
-      <span style="font-family: AbeeZee !important;" class="headline">{{ round(comp.grade) }}%</span>
+    <v-row
+      v-if="comp.isList"
+      class="pa-3 around"
+      :class="{ around: comp.isList }"
+    >
+      <span style="font-family: AbeeZee !important" class="headline"
+        >Total score:</span
+      >
+      <span style="font-family: AbeeZee !important" class="headline"
+        >{{ round(comp.grade) }}%</span
+      >
     </v-row>
     <template v-else>
       <v-row class="pa-3 around" align="center">
-        <span class="headline" style="font-family: AbeeZee !important;">Total score:</span>
+        <span class="headline" style="font-family: AbeeZee !important"
+          >Total score:</span
+        >
 
         <input
           @keyup.enter="changeGrade"
           type="text"
-          class="spewrapper headline pl-9"
-          style="font-family: AbeeZee !important;"
+          class="spewrapper headline pl-4"
+          style="font-family: AbeeZee !important"
           v-model="grade"
           v-bind:class="[dark]"
-          :placeholder="String(round(comp.grade))+'%'"
+          :placeholder="String(round(comp.grade)) + '%'"
         />
         <!-- <div>{{comp.weight}}%</div> -->
       </v-row>
@@ -86,7 +105,7 @@
 import comcom from "~/components/comcom.vue";
 export default {
   props: {
-    comp: Object
+    comp: Object,
   },
   data: () => {
     return {
@@ -99,15 +118,15 @@ export default {
         2: 5.4,
         3: 5.7,
         4: 5.1,
-        5: 4.6
-      }
+        5: 4.6,
+      },
     };
   },
   methods: {
     deleteComp(name) {
       this.$emit("delcomcom", {
         comcom: name,
-        com: this.comp.name
+        com: this.comp.name,
       });
     },
     propUp() {
@@ -134,9 +153,9 @@ export default {
     },
     addComcom() {
       this.$emit("addcomcom", this.comp.name);
-    }
+    },
   },
-  mounted: function() {
+  mounted: function () {
     this.$root.$on("editcomcom", () => {
       this.editMode = !this.editMode;
     });
@@ -145,7 +164,7 @@ export default {
       this.$root.$emit("weight", [
         this.comp.name,
         this.weight,
-        this.comp.weight
+        this.comp.weight,
       ]);
     });
     this.$root.$on("clearweights", () => {
@@ -153,23 +172,23 @@ export default {
     });
   },
   computed: {
-    dark: function() {
+    dark: function () {
       return this.$vuetify.theme.dark ? "dark" : "";
     },
     percentage() {
       return String(this.calcGrad(this.comp.grade, this.comp.weight));
     },
-    boi: function() {
+    boi: function () {
       let f =
         this.comp.weight === 100
           ? this.emAmt[3] - 0.9
           : this.emAmt[String(this.comp.weight).length];
       return f - 3;
-    }
+    },
   },
   components: {
-    comcom
-  }
+    comcom,
+  },
 };
 </script>
 
