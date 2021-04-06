@@ -201,6 +201,7 @@ export default {
 }
 .smallboi {
   width: 14.5vw;
+  max-width: 290px;
 }
 .around {
   justify-content: space-between;
