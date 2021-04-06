@@ -65,7 +65,7 @@ import ic from "~/components/internalcomponent.vue";
 import { letterGrade } from "~/backend/helpers.js";
 export default {
   props: {
-    dat: Object
+    dat: Object,
   },
   data: () => {
     return {
@@ -73,10 +73,10 @@ export default {
       weights: {},
       snackbar: false,
       snackbartext: "",
-      oldweights: {}
+      oldweights: {},
     };
   },
-  mounted: function() {
+  mounted: function () {
     if (this.$store.state.advanced.editmode) {
       this.$store.commit("advanced/toggleEdit");
     }
@@ -86,7 +86,7 @@ export default {
     function disableSpellCheck() {
       let selector = "input[type=text], textarea";
       let textFields = window.document.querySelectorAll(selector);
-      textFields.forEach(function(field, _currentIndex, _listObj) {
+      textFields.forEach(function (field, _currentIndex, _listObj) {
         field.spellcheck = false;
       });
     }
@@ -113,7 +113,7 @@ export default {
     delcomcom(obj) {
       this.$store.commit("classes/delcomcom", {
         ...obj,
-        course: this.dat.name
+        course: this.dat.name,
       });
     },
     deleteComp(name) {
@@ -167,10 +167,14 @@ export default {
           );
           return;
         }
-
+        console.log(
+          this.dat.name,
+          Object.keys(this.weights),
+          Object.values(this.weights)
+        );
         this.$store.commit("classes/changeWeights", [
           this.dat.name,
-          this.weights
+          this.weights,
         ]);
         this.$root.$emit("clearweights");
       }, 200);
@@ -198,13 +202,13 @@ export default {
     },
     editCompGrade([gradee, name]) {
       this.$store.commit("classes/changeGrade", [gradee, name, this.dat.name]);
-    }
+    },
   },
   computed: {
-    dark: function() {
+    dark: function () {
       return this.$vuetify.theme.dark ? "dark" : "";
     },
-    size: function() {
+    size: function () {
       return "display-4";
       //   let length = this.dat.name.length;
       //   if (length >= 22) {
@@ -216,11 +220,11 @@ export default {
       //     return "lh display-4";
       //   }
       // return "headlinee";
-    }
+    },
   },
   components: {
-    ic
-  }
+    ic,
+  },
 };
 </script>
 

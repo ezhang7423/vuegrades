@@ -1,7 +1,7 @@
 <template>
   <v-card
-    min-width="15.5vw"
-    min-height="300px"
+    min-width="250px"
+    min-height="400px"
     :outlined="$vuetify.theme.dark"
     tile
     elevation="24"
@@ -213,7 +213,8 @@ export default {
   float: right;
 }
 .spewrapper {
-  width: 5.5vw;
+  width: 80px;
+  color: white;
   /* display: none; */
 }
 
