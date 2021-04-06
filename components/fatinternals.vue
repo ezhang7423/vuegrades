@@ -230,7 +230,7 @@ export default {
 
 <style scoped>
 .centerme {
-  flex-wrap: nowrap;
+  /* flex-wrap: nowrap; */
 }
 .bigg {
   font-size: 30px !important;
