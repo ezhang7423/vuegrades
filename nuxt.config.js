@@ -4,6 +4,7 @@ const routerbase = process.env.DEPLOY_ENV === "GH_PAGES" ? "/vuegrades/" : "/";
 console.log("ROUTER BASE:", routerbase);
 
 export default {
+  target: 'static',
   router: {
     base: routerbase
   },
@@ -22,7 +23,7 @@ export default {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: `${routerbase}favicon.ico` }]
   },
   /*
    ** Customize the progress-bar color
@@ -91,6 +92,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) { }
   }
 };
