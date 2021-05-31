@@ -40,9 +40,9 @@ export default {
     window.Parse = this.$parse;
     if (this.$store.state.classes.length == 0) {
       console.log(this.internalState);
-      let bois = helpers.addFake();
-      this.$store.commit("classes/addClass", bois.x);
-      this.$store.commit("classes/addClass", bois.y);
+      // let bois = helpers.addFake();
+      // this.$store.commit("classes/addClass", bois.x);
+      // this.$store.commit("classes/addClass", bois.y);
     } else {
       // let bois = helpers.addFake();
       // this.$store.commit("classes/clear");
