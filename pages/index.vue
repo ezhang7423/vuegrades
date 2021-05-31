@@ -1,8 +1,8 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-col>
+    <!-- <v-col>
       <NameInput v-show="name === ''" />
-    </v-col>
+    </v-col> -->
     <client-only>
       <v-row>
         <CourseV
@@ -25,8 +25,7 @@
 
 <script>
 import advancedview from "~/components/fatinternals.vue";
-import NameInput from "~/components/nameinput.vue";
-import { GradeComponent, Course } from "~/backend/classes";
+import { Course } from "~/backend/classes";
 import * as helpers from "~/backend/helpers";
 import CourseV from "~/components/course.vue";
 export default {
@@ -37,8 +36,8 @@ export default {
       advname: "PSTAT 120A",
     };
   },
-  mounted: function () {
-    // this.signUp();
+  mounted() {
+    window.Parse = this.$parse;
     if (this.$store.state.classes.length == 0) {
       console.log(this.internalState);
       let bois = helpers.addFake();
@@ -51,28 +50,6 @@ export default {
     }
   },
   methods: {
-    async signUp() {
-      // Create a new instance of the user class
-      var user = new this.$parse.User();
-      user.set("username", "my name");
-      user.set("password", "my pass");
-      user.set("email", "email@example.com");
-
-      // other fields can be set just like with Parse.Object
-      user.set("phone", "415-392-0202");
-
-      try {
-        let res = await user.signUp();
-        console.log(
-          "User created successful with name: " +
-            res.get("username") +
-            " and email: " +
-            res.get("email")
-        );
-      } catch (e) {
-        console.log("Error: " + error.code + " " + error.message);
-      }
-    },
     editData(type, vals) {
       let funcname = "edit" + type;
       this[funcname](vals);
@@ -172,7 +149,6 @@ export default {
     },
   },
   components: {
-    NameInput,
     CourseV,
     advancedview,
   },

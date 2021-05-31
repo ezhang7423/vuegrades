@@ -22,3 +22,9 @@ html {
 .nopadsp > div > div {
   padding: 0 !important;
 }
+.max-width {
+  width: 100%;
+}
+.toasted {
+  font-family: AbeeZee;
+}

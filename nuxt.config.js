@@ -8,7 +8,7 @@ export default {
   router: {
     base: routerbase
   },
-
+  components: true,
   /*
    ** Headers of the page
    */
@@ -25,9 +25,23 @@ export default {
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: `${routerbase}favicon.ico` },
-      { rel: "icon", type: "image/png", sizes: "32x32", href: `${routerbase}favicon-32x32.png` },
-      { rel: "icon", type: "image/png", sizes: "16x16", href: `${routerbase}favicon-16x16.png` },
-      { rel: "apple-touch-icon", sizes: "180x180", href: `${routerbase}apple-touch-icon.png` }
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: `${routerbase}favicon-32x32.png`
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: `${routerbase}favicon-16x16.png`
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: `${routerbase}apple-touch-icon.png`
+      }
     ]
   },
   /*
@@ -50,6 +64,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    "@nuxtjs/toast",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     // Doc: https://github.com/nuxt-community/dotenv-module
@@ -63,6 +78,10 @@ export default {
       }
     ]
   ],
+  toast: {
+    theme: "bubble",
+    position: "bottom-center"
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -90,6 +109,7 @@ export default {
       }
     }
   },
+
   /*
    ** Build configuration
    */
