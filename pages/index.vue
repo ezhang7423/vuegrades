@@ -36,17 +36,11 @@ export default {
       advname: "PSTAT 120A",
     };
   },
-  mounted() {
+  async mounted() {
     window.Parse = this.$parse;
-    if (this.$store.state.classes.length == 0) {
-      console.log(this.internalState);
-      // let bois = helpers.addFake();
-      // this.$store.commit("classes/addClass", bois.x);
-      // this.$store.commit("classes/addClass", bois.y);
-    } else {
-      // let bois = helpers.addFake();
-      // this.$store.commit("classes/clear");
-      // this.$store.commit("classes/addClass", bois.y);
+    if (this.$parse.User.current()) {
+      let course = await helpers.getCourseObject();
+      this.$store.commit("classes/replace", await course.get("course_json"));
     }
   },
   methods: {

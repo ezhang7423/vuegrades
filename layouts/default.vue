@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import * as helpers from "~/backend/helpers";
+
 export default {
   data() {
     return {
@@ -98,11 +100,14 @@ export default {
     setTimeout(disableSpellCheck, 500);
   },
   methods: {
-    closeSignupModal() {
+    async closeSignupModal() {
       this.signup_modal = false;
       let user = this.$parse.User.current();
       if (user) {
         this.$store.commit("name/change", user.getUsername());
+        let course = await helpers.getCourseObject();
+        this.$store.commit("classes/replace", await course.get("course_json"));
+
         this.loggedin = true;
       }
     },

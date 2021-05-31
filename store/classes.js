@@ -1,5 +1,10 @@
 import { GradeComponent, Course } from "~/backend/classes";
-import { capFirst, getRandomInt, generateName } from "~/backend/helpers";
+import {
+  capFirst,
+  getRandomInt,
+  generateName,
+  getCourseObject
+} from "~/backend/helpers";
 function find(state, name) {
   let i = 0;
   for (let x of state) {
@@ -19,6 +24,14 @@ function findO(state, name) {
   return -1;
 }
 
+function saveDB(state) {
+  let stringified = JSON.stringify(state);
+  getCourseObject().then(course => {
+    course.set("course_json", stringified);
+    course.save();
+  });
+}
+
 export const state = () => [];
 export const mutations = {
   delcomcom(state, obj) {
@@ -34,12 +47,14 @@ export const mutations = {
       // console.log(dad.grad);
       state.push("rerender");
       state.pop();
+      saveDB(state);
     }
   },
   deleteClass(state, name) {
     let index = find(state, name);
     if (index != -1) {
       state.splice(index, 1);
+      saveDB(state);
     } else {
       console.log("class not found");
     }
@@ -79,6 +94,7 @@ export const mutations = {
     } else {
       console.log("class not found");
     }
+    saveDB(state);
   },
   changeGrade(state, [grade, compname, name]) {
     let index = find(state, name);
@@ -88,6 +104,7 @@ export const mutations = {
     } else {
       console.log("class not found");
     }
+    saveDB(state);
   },
   changeWeights(state, [name, weights]) {
     let index = find(state, name);
@@ -102,6 +119,7 @@ export const mutations = {
         console.log("Weight not found");
       }
     }
+    saveDB(state);
   },
   addComp(state, [id, name]) {
     let dad = state[find(state, name)];
@@ -131,6 +149,7 @@ export const mutations = {
     }
     state.push("rerender");
     state.pop();
+    saveDB(state);
   },
   delComp(state, [name, coursename]) {
     let dad = state[find(state, coursename)];
@@ -138,11 +157,13 @@ export const mutations = {
     delete dad.weights[key];
     state.push("rerender");
     state.pop();
+    saveDB(state);
   },
   changeName(state, [nV, oV]) {
     let index = find(state, oV);
     if (index != -1) {
       state[index].name = nV;
+      saveDB(state);
     } else {
       console.log("class not found");
     }
@@ -165,6 +186,7 @@ export const mutations = {
     dad.grad[storelen] = { name: `${dad.name} ${storelen}`, gradie: 100 };
     state.push("rerender");
     state.pop();
+    saveDB(state);
   },
   changeComponentName(state, [nV, oV, name]) {
     let index = find(state, name);
@@ -181,6 +203,7 @@ export const mutations = {
   },
   addClass(state, classs) {
     state.push(classs);
+    saveDB(state);
   },
   newClass(state) {
     let next = generateName();
@@ -188,9 +211,17 @@ export const mutations = {
       next = generateName();
     }
     state.push(new Course(next, [100]));
+    saveDB(state);
   },
   clear(state) {
     state.length = 0;
+    saveDB(state);
+  },
+  replace(state, stringified) {
+    state.length = 0;
+    for (let course of JSON.parse(stringified)) {
+      state.push(course);
+    }
   }
 };
 

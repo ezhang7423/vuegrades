@@ -1,6 +1,9 @@
 # gradegrade
 [![Build Status](https://travis-ci.org/ezhang7423/vuegrades.svg?branch=master)](https://travis-ci.org/ezhang7423/vuegrades)
 > calc ur grades bruh
+## todo
+
+* acl for db courses obj
 
 ## Deployment
 

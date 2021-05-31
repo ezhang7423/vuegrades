@@ -8,6 +8,16 @@ export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+export async function getCourseObject() {
+  let user = Parse.User.current();
+  if (!user) return;
+  const courses = Parse.Object.extend("Courses");
+  const query = new Parse.Query(courses);
+  query.equalTo("User", user);
+  const results = await query.find();
+  return results[0];
+}
+
 export function generateName() {
   var name1 = [
     "abandoned",
