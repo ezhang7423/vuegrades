@@ -14,6 +14,7 @@
         <v-text-field
           v-model="password"
           type="password"
+          @keyup.enter="submit"
           label="Password"
         ></v-text-field>
       </v-card-text>
@@ -49,7 +50,7 @@ export default {
     },
     async login() {
       try {
-        var user = await Parse.User.logIn(this.username, this.password);
+        var user = await this.$parse.User.logIn(this.username, this.password);
         console.log(user);
       } catch (e) {
         console.error(e);
@@ -60,7 +61,6 @@ export default {
       // Create a new instance of the user class
 
       var user = new this.$parse.User();
-      console.log(user);
       user.set("username", this.username);
       user.set("password", this.password);
       user.set("email", this.email);

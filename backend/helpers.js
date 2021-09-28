@@ -10,11 +10,27 @@ export function getRandomInt(min, max) {
 
 export async function getCourseObject() {
   let user = Parse.User.current();
-  if (!user) return;
+  if (!user) {
+    console.error("Could not find current user");
+    return;
+  }
   const courses = Parse.Object.extend("Courses");
   const query = new Parse.Query(courses);
   query.equalTo("User", user);
-  const results = await query.find();
+  const results = await query.find(); // create new course if results is empty listj
+  if (results.length == 0) {
+    console.log("could not find user course, creating new one");
+    const courses = new Parse.Object("Courses");
+    courses.set("course_json", "[]");
+    let userRelation = courses.relation("User");
+    userRelation.add(user);
+
+    try {
+      await courses.save();
+    } catch (e) {
+      console.error(e);
+    }
+  }
   return results[0];
 }
 
@@ -1077,7 +1093,7 @@ export function generateName() {
     "sour",
     "Spanish",
     "sparkling",
-    "sparse",
+    "sParse",
     "specific",
     "spectacular",
     "speedy",
@@ -1667,8 +1683,8 @@ export function largestUntitled() {
   let max = 0;
   for (let x of Object.keys(store)) {
     if (store[x].name.includes("untitled")) {
-      if (parseInt(store[x].name.split(" ")[2]) > max) {
-        max = parseInt(store[x].name.split(" ")[2]);
+      if (ParseInt(store[x].name.split(" ")[2]) > max) {
+        max = ParseInt(store[x].name.split(" ")[2]);
       }
     }
   }
@@ -1677,7 +1693,7 @@ export function largestUntitled() {
 
 export function reconstruct() {
   try {
-    let store = JSON.parse(localStorage.getItem("gc-datastore"));
+    let store = JSON.Parse(localStorage.getItem("gc-datastore"));
     let act = {};
     if (store !== null) {
       for (let course of Object.keys(store)) {
@@ -1712,8 +1728,8 @@ export function save(data, type) {
   store = reconstruct();
   try {
     var storelen = Object.keys(store).reduce((a, b) => {
-      a = parseInt(a);
-      b = parseInt(b);
+      a = ParseInt(a);
+      b = ParseInt(b);
 
       return a > b ? a : b;
     });

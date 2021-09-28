@@ -37,10 +37,10 @@ export default {
     };
   },
   async mounted() {
-    window.Parse = this.$parse;
     if (this.$parse.User.current()) {
-      let course = await helpers.getCourseObject();
-      this.$store.commit("classes/replace", await course.get("course_json"));
+      let course = await helpers.getCourseObject(this.$parse);
+      console.debug("course:", course);
+      this.$store.commit("classes/replace", await course?.get("course_json"));
     }
   },
   methods: {

@@ -219,6 +219,7 @@ export const mutations = {
   },
   replace(state, stringified) {
     state.length = 0;
+    if (!stringified) stringified = "[]";
     for (let course of JSON.parse(stringified)) {
       state.push(course);
     }

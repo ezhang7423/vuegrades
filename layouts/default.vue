@@ -81,6 +81,10 @@ export default {
       exportedData: null,
     };
   },
+  created() {
+    if (process.server) return;
+    window.Parse = this.$parse;
+  },
   mounted() {
     let user = this.$parse.User.current();
     this.loggedin = Boolean(user);
