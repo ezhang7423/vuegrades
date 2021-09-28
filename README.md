@@ -6,6 +6,8 @@
 * acl for db courses obj
 * make percentage validator less jank
 * make courses and course components draggable for rearranging order
+* make default names for course component lists reasonable
+
 ## Deployment
 
 On push to master, travis ci runs `npm run generate` which creates static html with nuxt. These files are then pushed to `gh-pages`, where github then
