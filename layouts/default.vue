@@ -49,8 +49,8 @@
         <v-icon>fa-cog</v-icon>
       </v-btn> -->
     </v-app-bar>
-    <v-main>
-      <v-container>
+    <v-main id="main">
+      <v-container id="container">
         <nuxt />
       </v-container>
     </v-main>
@@ -155,9 +155,18 @@ export default {
 };
 </script>
 
-https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=https://oauth.back4app.io/redirect&prompt=consent&response_type=code&client_id=117430139946-v73mh70jkiu7sstd69dbvnrgppkujo9a.apps.googleusercontent.com&scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/plus.me+https://www.googleapis.com/auth/userinfo.profile+&access_type=offline
 
-https://oauth.back4app.io/redirect?code=4/0AY0e-g5V9Pa0s72yd1pP66LGpq1Ma1mffuBF3X2Yv2GHfEsbsKcyHQCSyhnydafeDXq7PQ&scope=email%20profile%20https://www.googleapis.com/auth/userinfo.email%20openid%20https://www.googleapis.com/auth/userinfo.profile&authuser=1&hd=ucsb.edu&prompt=consent
-
-
-4/0AY0e-g5V9Pa0s72yd1pP66LGpq1Ma1mffuBF3X2Yv2GHfEsbsKcyHQCSyhnydafeDXq7PQ
+<style scoped>
+#main {
+  overflow-y: scroll;
+  height: calc(100vh - 48px);
+}
+#container {
+  overflow-x: hidden;
+}
+@media only screen and (min-width: 960px) {
+  #container {
+    max-width: unset;
+  }
+}
+</style>

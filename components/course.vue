@@ -184,6 +184,12 @@ export default {
   height: 563.5px;
 }
 
+@media only screen and (max-width: 1200px) {
+  .golden {
+    width: 284px;
+    height: 500px;
+  }
+}
 .pad4 {
   margin: 0 10px;
 }

@@ -1,17 +1,17 @@
 <template>
-  <v-layout column justify-center align-center>
+  <v-layout style="margin-bottom: 100px" column justify-center align-center>
     <!-- <v-col>
       <NameInput v-show="name === ''" />
     </v-col> -->
     <client-only>
-      <v-row>
+      <div class="course-grid">
         <CourseV
           @advanced="setAdvanced"
           v-for="course in internalState"
           :key="course.name"
           :dat="course"
         />
-      </v-row>
+      </div>
     </client-only>
     <v-dialog v-model="advanced" fullscreen>
       <advancedview
@@ -23,6 +23,16 @@
   </v-layout>
 </template>
 
+<style scoped>
+.course-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+  grid-gap: 16px;
+  justify-content: center;
+  padding: initial;
+}
+</style>
 <script>
 import advancedview from "~/components/fatinternals.vue";
 import { Course } from "~/backend/classes";

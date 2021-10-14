@@ -13,7 +13,7 @@
           <template v-slot:activator="{ on }">
             <v-hover v-slot:default="{ hover }">
               <v-card flat :elevation="hover ? 2 : 0">
-                <div style="padding: 5px;" class="text-center" v-on="on">
+                <div style="padding: 5px" class="text-center" v-on="on">
                   <v-icon>fa-list</v-icon>
                 </div>
               </v-card>
@@ -59,13 +59,16 @@
           >
             <template v-slot:label>
               <span
-                :style="`padding-left: ${percentage === '100' ? '.4' : emAmt[percentage.length]}em`"
-              >{{percentage}}</span>
+                :style="`padding-left: ${
+                  percentage === '100' ? '.4' : emAmt[percentage.length]
+                }em`"
+                >{{ percentage }}</span
+              >
             </template>
           </v-text-field>
         </span>
       </template>
-      <span>{{comp.grade}}%</span>
+      <span>{{ comp.grade }}%</span>
     </v-tooltip>
   </v-row>
 </template>
@@ -74,7 +77,7 @@
 import comcom from "~/components/comcom.vue";
 export default {
   props: {
-    comp: Object
+    comp: Object,
   },
   data: () => {
     return {
@@ -85,8 +88,8 @@ export default {
         2: 1.7,
         3: 1.4,
         4: 0.8,
-        5: 0.2
-      }
+        5: 0.2,
+      },
     };
   },
   methods: {
@@ -104,22 +107,27 @@ export default {
     calcGrad(grade, weight) {
       let num = (grade / 100) * weight;
       return Math.round((num + Number.EPSILON) * 100) / 100;
-    }
+    },
   },
   computed: {
     percentage() {
       return String(this.calcGrad(this.comp.grade, this.comp.weight));
-    }
+    },
   },
   components: {
-    comcom
-  }
+    comcom,
+  },
 };
 </script>
 
 <style scoped>
 .pewrapper {
   width: 39%;
+}
+@media screen and (max-width: 1200px) {
+  .pewrapper {
+    width: 47%;
+  }
 }
 .pepwrapper {
   max-width: 46%;
