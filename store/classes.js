@@ -147,7 +147,7 @@ export const mutations = {
         100,
         0
       ));
-      Vue.set(dad.weights[storelen], 'grade', { "0": 100 });
+      Vue.set(dad.weights[storelen], 'grade', { "1": 100 });
     }
     state.push("rerender");
     state.pop();
