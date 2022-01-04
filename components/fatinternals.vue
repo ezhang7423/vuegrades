@@ -155,15 +155,10 @@ export default {
             return;
           }
         }
-        let notTotal = 0;
-        for (let i of notset) {
-          notTotal += Number(this.oldweights[i]);
-          delete this.weights[i];
-        }
 
-        if (total != 100 - notTotal) {
+        if (total != 100 ) {
           this.setSnackbar(
-            "Weights do not add up to " + String(100 - notTotal)
+            "Weights do not add up to 100"
           );
           return;
         }
