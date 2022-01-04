@@ -1,3 +1,4 @@
+import Vue from "vue";
 import { GradeComponent, Course } from "~/backend/classes";
 import {
   capFirst,
@@ -135,18 +136,18 @@ export const mutations = {
     }
     storelen++;
     if (id === "t") {
-      dad.weights[storelen] = new GradeComponent(
+      Vue.set(dad.weights,storelen,new GradeComponent(
         `Test ${storelen + 1}`,
         100,
         0
-      );
+      ));
     } else {
-      dad.weights[storelen] = new GradeComponent(
+      Vue.set(dad.weights,storelen, new GradeComponent(
         `Homework ${storelen + 1}`,
         100,
         0
-      );
-      dad.weights[storelen].grade = { "0": 100 };
+      ));
+      Vue.set(dad.weights[storelen], 'grade', { "0": 100 });
     }
     state.push("rerender");
     state.pop();
@@ -193,14 +194,18 @@ export const mutations = {
     let index = find(state, name);
     if (index != -1) {
       let j = findO(state[index].weights, oV);
+      console.log(state[index].weights[j])
       if (j != -1) {
-        state[index].weights[j].name = nV;
+        Vue.set(state[index].weights[j], 'name', nV);
+        state.push('rerender')
+        state.pop()
       } else {
         console.log("component not found");
       }
     } else {
       console.log("class not found");
     }
+    saveDB(state)
   },
   addClass(state, classs) {
     state.push(classs);
