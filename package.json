@@ -24,6 +24,9 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
-    "@nuxtjs/vuetify": "^1.11.3"
+    "@nuxtjs/vuetify": "^1.11.3",
+    "eslint": "^8.6.0",
+    "prettier": "2.5.1",
+    "prettier-plugin-import-sort": "^0.0.7"
   }
 }

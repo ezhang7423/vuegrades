@@ -34,6 +34,7 @@ function saveDB(state) {
 
 export const state = () => [];
 export const mutations = {
+  saveDB,
   delcomcom(state, obj) {
     let index = find(state, obj.course);
     let dad = state[index].weights;
@@ -217,7 +218,7 @@ export const mutations = {
     state.length = 0;
     saveDB(state);
   },
-  replace(state, stringified) {
+  replace(state, stringified) {    
     state.length = 0;
     if (!stringified) stringified = "[]";
     for (let course of JSON.parse(stringified)) {

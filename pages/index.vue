@@ -49,7 +49,6 @@ export default {
   async mounted() {
     if (this.$parse.User.current()) {
       let course = await helpers.getCourseObject(this.$parse);
-      console.debug("course:", course);
       this.$store.commit("classes/replace", await course?.get("course_json"));
     }
   },
@@ -111,6 +110,7 @@ export default {
       let store = this.$store.state.classes;
       let act = [];
       try {
+        console.log(store);
         if (store !== null) {
           let i = 0;
           for (let course of store) {

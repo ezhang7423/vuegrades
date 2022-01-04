@@ -1673,81 +1673,7 @@ let addFake = () => {
 };
 
 export { addFake };
-let cClear = () => {
-  localStorage.removeItem("gc-datastore");
-  location.reload();
-};
-export { cClear };
-export function largestUntitled() {
-  store = reconstruct();
-  let max = 0;
-  for (let x of Object.keys(store)) {
-    if (store[x].name.includes("untitled")) {
-      if (ParseInt(store[x].name.split(" ")[2]) > max) {
-        max = ParseInt(store[x].name.split(" ")[2]);
-      }
-    }
-  }
-  return max;
-}
 
-export function reconstruct() {
-  try {
-    let store = JSON.Parse(localStorage.getItem("gc-datastore"));
-    let act = {};
-    if (store !== null) {
-      for (let course of Object.keys(store)) {
-        let weights = [];
-        for (let component of Object.keys(store[course].weights)) {
-          weights.push(store[course].weights[component].weight);
-        }
-        act[course] = new Course(store[course].name, weights);
-        for (let component of Object.keys(store[course].weights)) {
-          if (typeof store[course].weights[component].grad === "object") {
-            act[course].weights[component].grad =
-              store[course].weights[component].grad;
-            act[course].weights[component].isList = true;
-          } else {
-            act[course].weights[component].grade =
-              store[course].weights[component].grad;
-          }
-          act[course].weights[component].name =
-            store[course].weights[component].name;
-        }
-      }
-      return act;
-    } else {
-      return null;
-    }
-  } catch (e) {
-    cClear();
-  }
-}
-
-export function save(data, type) {
-  store = reconstruct();
-  try {
-    var storelen = Object.keys(store).reduce((a, b) => {
-      a = ParseInt(a);
-      b = ParseInt(b);
-
-      return a > b ? a : b;
-    });
-  } catch {
-    var storelen = -1;
-  }
-  storelen++;
-  if (type === "course") {
-    store[storelen] = {};
-    store[storelen].name = data.name;
-    store[storelen].weights = data.export();
-    localStorage.setItem("gc-datastore", JSON.stringify(store));
-  } else if (type === "component") {
-    let courseKey = searchObj(store, data.name);
-    store[courseKey] = data;
-    localStorage.setItem("gc-datastore", JSON.stringify(store));
-  }
-}
 
 export function searchObj(store, name) {
   for (let course of Object.keys(store)) {
@@ -1804,10 +1730,4 @@ export function letterGrade(data) {
   } else {
     return "F";
   }
-}
-export function del(name) {
-  store = reconstruct();
-  delete store[name];
-  localStorage.setItem("gc-datastore", JSON.stringify(store));
-  location.reload();
 }

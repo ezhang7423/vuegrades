@@ -1,3 +1,4 @@
+
 <template>
   <v-app dark>
     <v-app-bar
@@ -139,13 +140,11 @@ export default {
       if (file !== undefined) {
         file.text().then((res) => {
           try {
-            let data = JSON.parse(res);
-
-            for (let x of data) {
-              this.$store.commit("classes/addClass", x);
-            }
+            this.$store.commit("classes/replace", res);
+            this.$store.commit("classes/saveDB");
           } catch (e) {
             alert("that file ain't valid ma boi");
+            console.error(e);
             throw "wrong file";
           }
         });
