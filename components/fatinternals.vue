@@ -73,7 +73,6 @@ export default {
       weights: {},
       snackbar: false,
       snackbartext: "",
-      oldweights: {},
     };
   },
   mounted: function () {
@@ -132,17 +131,17 @@ export default {
     },
     getWeights() {
       this.$root.$on("weight", ([k, v, o]) => {
-        this.weights[k] = v;
-        this.oldweights[k] = o;
+        if (v == "") {
+          this.weights[k] = o;
+        } else {
+          this.weights[k] = v;
+        }
       });
       this.$root.$emit("requestweights");
       setTimeout(() => {
         let total = 0;
         let notset = [];
         for (let w in this.weights) {
-          if (this.weights[w] === "") {
-            notset.push(w);
-          }
           try {
             let pot = Number(this.weights[w]);
             if (isNaN(pot)) {
@@ -155,11 +154,8 @@ export default {
             return;
           }
         }
-
-        if (total != 100 ) {
-          this.setSnackbar(
-            "Weights do not add up to 100"
-          );
+        if (total != 100) {
+          this.setSnackbar("Weights do not add up to 100");
           return;
         }
         console.log(
@@ -172,6 +168,7 @@ export default {
           this.weights,
         ]);
         this.$root.$emit("clearweights");
+        this.weights = {};
       }, 200);
     },
     addcomcom(compname) {
